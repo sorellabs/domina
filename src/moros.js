@@ -13,7 +13,7 @@ void function (root) {
 
     var __old, moros
       , __map   = [].map
-      , __each  = [].each
+      , __each  = [].forEach
       , __class = {}.toString
 
 
