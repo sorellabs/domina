@@ -69,7 +69,7 @@ void function (root) {
 
     //// Function each /////////////////////////////////////////////////////////
     //
-    // :: Sequence, Iterator, Object → Array
+    // :: Sequence, Iterator, Object → undefined
     //
     // Calls the iterator function in every element in the sequence.
     //
@@ -341,6 +341,14 @@ void function (root) {
             prepend(element.parentNode, element)
             detach(element) }
     }
+
+
+    /// -CSS utilities /////////////////////////////////////////////////////////
+
+    //// Object classes ////////////////////////////////////////////////////////
+    //
+    //
+    //
 
 
 
