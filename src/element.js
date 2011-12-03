@@ -66,7 +66,7 @@ void function(root, require_p, exports_p) {
   function data_set(element, key, value) {
     return attr_set(element, 'data-' + key, value) }
 
-  
+
   //// -DOM tree manipulation
   function detach(element) {
     element.parentNode.removeChild(element)
@@ -77,7 +77,7 @@ void function(root, require_p, exports_p) {
     return element }
 
   function insert_after(element, insert) {
-    element.parentNode.insertAfter(insert, element.nextSibling)
+    element.parentNode.insertBefore(insert, element.nextSibling)
     return element }
 
   function append(parent, element) {
@@ -103,15 +103,14 @@ void function(root, require_p, exports_p) {
 
   //// -Layout
   // TODO: dimensions, offset, scroll
-  
+
   //// -Form data
   // TODO: value
 
 
   //// -Exports
-  var element
-  if (exports_p)  element = exports
-  else            element = moros.element || (moros.element = {})
+  var element = exports_p?  element = exports
+  : /* no modules? */       element = root.moros.element || (root.moros.element = {})
 
   element.text          = text
   element.text_set      = text_set
@@ -132,7 +131,7 @@ void function(root, require_p, exports_p) {
   element.internal      = { TEXT_PROPERTY: TEXT_PROPERTY }
 
 
-// -- 
+// --
 }
 ( this
 , typeof require == 'function'

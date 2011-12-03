@@ -26,7 +26,7 @@
 void function (root, require_p, exports_p) {
 
   var element = require_p?  require('./element') : root.moros.element
-  
+
 
   function map(nodes, mapper) { var i, len, result
     result = []
@@ -39,7 +39,7 @@ void function (root, require_p, exports_p) {
     i = nodes.length
     while (i--)
       iterator(nodes[i], i, nodes) }
-    
+
 
   function text(nodes) {
     return map(nodes, element.text) }
@@ -107,13 +107,12 @@ void function (root, require_p, exports_p) {
   function clone(nodes, deep) {
     return map(nodes, function(node){
                         return element.clone(node, deep) })}
-  
+
 
   //// -Exports
-  var nodelist
-  if (exports_p)  nodelist = exports
-  else            nodelist = moros.nodelist || (moros.nodelist = {})
-  
+  var nodelist = exports_p?  exports
+  : /* no modules */         root.moros.nodelist || (root.moros.nodelist = {})
+
 // --
 }
 ( this
