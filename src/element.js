@@ -34,7 +34,7 @@ void function(root, require_p, exports_p) {
     // and implemented everywhere. Mozilla still goes *only* for the
     // de-juri ``textContent``.
     TEXT_PROPERTY = 'innerText' in Element?  'innerText'
-    :               /* likely Mozilla */     'textContent'
+    : /* likely Gecko-based browsers */      'textContent'
   }()
 
 
