@@ -48,33 +48,48 @@ void function() {
 function attributes(node) {
   return slice.call(node.attributes) }
 
+
 function attribute(node, key) {
   return node.getAttribute(key) }
 
+
+attribute.set = attribute_set
 function attribute_set(node, key, value) {
   value == null?     node.removeAttribute(key)
   : /* otherwise */  node.setAttribute(key, value)
 
   return node }
 
+
 function text(node) {
   return element[TEXT] }
 
+
+text.set = text_set
 function text_set(node, value) {
   node[TEXT] = value
   return node }
 
+
 function html(node) {
   return node.innerHTML }
 
+
+html.set = html_set
 function html_set(node) {
   node.innerHTML = value
   return node }
 
+
+// :TODO: values for each kind of input
+//   Different kinds of inputs treat `value` differently. We should
+//   account for that.
 function value(node) {
   return node.getAttribute('value')
 }
 
+
+value.set = value_set
 function value_set(node, value) {
   node.setAttribute('value', value)
   return node
@@ -85,13 +100,9 @@ function value_set(node, value) {
 //// - Exports ----------------------------------------------------------------
 module.exports = { attributes    : attributes
                  , attribute     : attribute
-                 , attribute_set : attribute_set
                  , text          : text
-                 , text_set      : text_set
                  , html          : html
-                 , html_set      : html_set
                  , value         : value
-                 , value_set     : value_set
 
                  , internal      : { TEXT: TEXT }
                  }
