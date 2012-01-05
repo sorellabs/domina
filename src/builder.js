@@ -20,26 +20,43 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// TODO:
+
+// :TODO:
 //   - Rewrite `extend' as a pure function.
 
-/// Module clotho
+/// Module moros.builder
 
-//// - Aliases
+//// - Aliases ----------------------------------------------------------------
 var keys     = Object.keys
 var class_of = {}.toString
 
-//// Object html
+
+
+//// - Internal interfaces ----------------------------------------------------
+
+///// Interface Properties
+// Defines attributes that should be set in an `Element`.
+//
+// Properties :: { String -> String
+//                         | () -> String }
+
+
+//// - Data -------------------------------------------------------------------
+
+///// Object html
 // Namespace for all the HTML builder functions.
 var html     = {}
 
-//// Object defaults
+///// Object defaults
 // Namespace for default properties to be set when an object is
-// created, in the form ``{"tag-name" → Obj}``.
+// created.
+//
+// defaults :: {tag:String -> { property:String -> value:String }}
 var defaults = {}
 
+///// Data tags
 // List of tags we know about, and that'll be available as builder
-// functions on the ``html`` namespace.
+// functions on the `html' namespace.
 //
 // from: http://dev.w3.org/html5/spec-author-view/index.html
 var tags =
@@ -56,73 +73,58 @@ var tags =
          ).split(/\s+/)
 
 
+
 
-//// Function element_p
-// Checks if the ``subject`` is an Element.
+//// - Helper functions -------------------------------------------------------
+
+///// Function element_p
+// Checks if the `subject' is an `Element`.
 //
-// element_p :: Any → Bool
+// element_p :: Any -> Bool
 function element_p(subject) {
   return 'nodeType' in Object(subject)
   &&     subject.nodeType == Node.ELEMENT_NODE }
 
 
-//// Function sequence_p
-// Checks if the ``subject`` is a sequence (array-like) object.
+///// Function sequence_p
+// Checks if the `subject' is a sequence (/array-like/) object.
 //
-// sequence_p :: Any → Bool
+// sequence_p :: Any -> Bool
 function sequence_p(subject) {
   return subject
   &&     'length' in Object(subject) }
 
 
-//// Function callable_p
-// Checks if the ``subject`` can behave as a function (has [[Call]]).
+///// Function callable_p
+// Checks if the `subject' can behave as a function (has `[[Call]]`).
 //
-// callable_p :: Any → Bool
+// callable_p :: Any -> Bool
 function callable_p(subject) {
   return typeof subject == 'function' }
 
 
-//// Function obj_p
-// Checks if the ``subject`` is an Object.
+///// Function obj_p
+// Checks if the `subject' is an `Object`.
 //
-// obj_p :: Any → Bool
+// obj_p :: Any -> Bool
 function obj_p(subject) {
   return class_of.call(subject) == '[object Object]' }
 
 
-//// Function make_node
-// Ensures the ``subject`` is a Node, creating a textNode if needed.
+///// Function set_props
+// Sets the properties described by a plain object in the `Element`.
 //
-// make-node :: Element → Element
-// make-node :: Any     → Node 
-function make_node(subject) {
-  return element_p(subject)?   subject
-  :   /* String-y? */          text(subject) }
-
-
-//// Function text
-// Creates a TextNode
-//
-// text :: String -> Node
-function text(value) {
-  return document.createTextNode(value) }
-
-
-//// Function set_props
-// Sets the properties described by a plain object in the Element.
-//
-// set-props :: Element, Obj → Element
+// set-props! :: element:Element*, Object -> element
 function set_props(elm, props) {
   keys(props || {}).forEach(function(key) {
     elm.setAttribute(key, props[key]) })
   return elm }
 
 
-//// Function extend
-// Copies properties from the ``source`` object to ``target``.
+///// Function extend
+// Copies properties from the `source' object to `target'.
 //
-// extend :: Obj, Obj → Obj
+// extend! :: target:Object*, Properties -> target
 function extend(target, source) {
   keys(source || {}).forEach(function(key) {
     value = source[key]
@@ -131,10 +133,10 @@ function extend(target, source) {
   return target }
 
 
-//// Function append_children
-// Appends a list of nodes to the Element.
+///// Function append_children
+// Appends a list of nodes to the `Element`.
 //
-// append-children :: Element, [Any] → Element
+// append-children! :: element:Element*, [Any] -> element
 function append_children(elm, children) {
   var i, len
   for (i = 0, len = children.length; i < len; ++i) {
@@ -142,10 +144,33 @@ function append_children(elm, children) {
   return elm }
 
 
-//// Function make_element
-// Constructs a brand new Element with the tagName and given children.
+
+
+//// - DOM builders -----------------------------------------------------------
+
+///// Function text
+// Creates a `TextNode`.
 //
-// make-element :: Str, Obj, [Any] → Element
+// text :: String -> Node
+function text(value) {
+  return document.createTextNode(value) }
+
+
+///// Function make_node
+// Ensures the `subject' is a `Node`, creating a `TextNode` if needed.
+//
+// make-node :: Element -> Element
+// make-node :: Any     -> Node 
+function make_node(subject) {
+  return element_p(subject)?   subject
+  :   /* String-y? */          text(subject) }
+
+
+///// Function make_element
+// Constructs a brand new `Element` with the `tag'name  and given
+// `children'.
+//
+// make-element :: String, Properties, [Any] → Element
 function make_element(tag, props, children) {
   var elm
   elm = document.createElement(tag)
@@ -154,15 +179,15 @@ function make_element(tag, props, children) {
   return elm }
 
 
-//// Function make_builder
-// Constructs an Element builder for the given tagName.
+///// Function make_builder
+// Constructs an `Element` builder for the given `tag'name.
 //
 // :warning: side-effects
-//    This function will also add the created builder to the ``html``
+//    This function will also add the created builder to the `html`
 //    namespace. If you don't want that, you'll need to build your own
-//    abstraction on top of ``make_element``.
+//    abstraction on top of `make_element`.
 //
-// make-builder :: Str → Obj, Any... → Element
+// make-builder! :: String -> Properties?, Any... -> Element
 tags.forEach(make_builder)
 function make_builder(tag) {
   html[tag] = function Element(props) {
@@ -175,15 +200,18 @@ function make_builder(tag) {
   
 
 //// -Exports
-exports.defaults     = defaults
-exports.html         = html
-exports.text         = text
-exports.make_node    = make_node
-exports.make_element = make_element
-exports.make_builder = make_builder
-exports.internals    = { element_p:       element_p
-                       , sequence_p:      sequence_p
-                       , callable_p:      callable_p
-                       , obj_p:           obj_p
-                       , set_props:       set_props
-                       , append_children: append_children }
+//// ------------------------------------------------------------------
+module.exports = { defaults     : defaults
+                 , html         : html
+                 , text         : text
+                 , make_node    : make_node
+                 , make_element : make_element
+                 , make_builder : make_builder
+
+                 , internals    : { element_p:       element_p
+                                  , sequence_p:      sequence_p
+                                  , callable_p:      callable_p
+                                  , obj_p:           obj_p
+                                  , set_props:       set_props
+                                  , append_children: append_children }
+                 }
