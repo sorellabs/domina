@@ -36,6 +36,9 @@ var style_computed = 'currentStyle' in Element?
                                          .getComputedStyle(element, state) }
 
 
+function make_class_re(name) {
+  return new RegExp('\\b' + name.replace(/(\W)/g, '\\$1') + '\\b', 'gi') }
+
 
 //// - Core visual presentation -----------------------------------------------
 
