@@ -72,6 +72,11 @@ function clear(node) {
     node.removeChild(node.firstChild)
   return node }
 
+//// Function clone
+// clone! :: node:Node, deep:Bool? -> node
+function clone(node) {
+  return node.cloneNode(deep) }
+
 
 
 //// - Exports ----------------------------------------------------------------
@@ -83,4 +88,5 @@ module.exports = { append        : append
                  , detach        : detach
                  , replace       : replace
                  , clear         : clear
+                 , clone         : clone
                  }
