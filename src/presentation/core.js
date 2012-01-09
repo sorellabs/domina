@@ -1,4 +1,4 @@
-/// css.js --- Visual presentation handling
+/// core.js --- Core visual presentation handling
 //
 // Copyright (c) 2012 Quildreen Motta
 //
@@ -21,11 +21,13 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/// Module moros.css
+/// Module moros.presentation.core
 
 //// - Feature testing/helpers ------------------------------------------------
 var Element = document.createElement('div')
 
+
+// Gets the computed style of an element.
 var style_computed = 'currentStyle' in Element?
            /* IE? */ function _style_computed(element) {
                        return element.currentStyle }
@@ -36,82 +38,95 @@ var style_computed = 'currentStyle' in Element?
                                          .getComputedStyle(element, state) }
 
 
+// Escapes an arbitrary String to be used as a ClassName regular
+// expression.
 function make_class_re(name) {
   return new RegExp('\\b' + name.replace(/(\W)/g, '\\$1') + '\\b', 'gi') }
 
 
 //// - Core visual presentation -----------------------------------------------
 
-// :TODO:
-//   Needs some interesting and efficient way of handling property
-//   transformations before setting the values.
+///// Function style
+// Retrieves the value of the given style's `property', optionally
+// forcing them to be computed to reflect the current state of the
+// node.
+//
+// style :: Element, String, Bool? -> String
 function style(element, property, computed) {
+  // :TODO:
+  //   Needs some interesting and efficient way of handling property
+  //   transformations before setting the values.
   return computed?        style_computed(element)[property]
   :      /* otherwise */  element.style[property] }
 
 
-style.set = style_set
+///// Function style_set
+// Changes the value of the given style's `property' for the `element'.
+//
+// Since this property is defined at the element's level, it'll take
+// precedence over properties defined directly in the CSS (unless
+// they're marked as `!important`).
+//
+// style_set! :: Element, String, Bool? -> String
 function style_set(element, property, value) {
   element.style[property] = value
   return element }
 
 
+///// Function classes
+// Returns a list of all the classes defined for the `element'.
+//
+// classes :: Element -> [String]
 function classes(element) {
   return element.className.trim().split(/\s+/) }
 
 
-classes.add = classes_add
-function classes_add(element, class_name) {
-  element.className += ' ' + class_name
+///// Function classes_add
+// Adds a class to the `element'.
+//
+// classes_add! :: element:Element*, String -> element
+function classes_add(element, name) {
+  element.className += ' ' + name
   return element }
 
 
-classes.remove = classes_remove
+///// Function classes_remove
+// Removes a class from the `element'.
+//
+// classes_remove! :: element:Element*, String -> element
 function classes_remove(element, name) {
   var re = make_class_re(name)
   element.className = element.className.replace(re, '')
   return element }
 
 
-classes.has_p = classes_has_p
+///// Function classes_has_p
+// Does the `element' has the given class?
+//
+// classes_has_p :: Element, String -> Bool
 function classes_has_p(element, name) {
   return element.className.test(make_class_re(name)) }
 
 
-classes.toggle = classes_toggle
+///// Function classes_toggle
+// Toggles a class on the `element'. Such that it'll be removed if it's
+// present, or added otherwise.
+//
+// classes_toggle! :: element:Element, String -> element
 function classes_toggle(element, name) {
   return classes_has_p(element, name)?  classes_remove(element, name)
   :      /* otherwise */                classes_add(element, name) }
 
 
 
-//// - Higher-level visual actions --------------------------------------------
-function show(element) {
-  style_set(element, 'display', 'block')
-  return element }
-
-function hide(element) {
-  style_set(element, 'display', 'none')
-  return element }
-
-function visible_p(element) {
-  var style = style_computed(element)
-  return style['display'] != 'none' }
-  
-
-function toggle(element) {
-  return visible_p(element)?  hide(element)
-  :      /* otherwise */      show(element) }
-
-
-
 //// - Exports ----------------------------------------------------------------
-module.exports = { style     : style
-                 , classes   : classes
-                 , show      : show
-                 , hide      : hide
-                 , visible_p : visible_p
-                 , toggle    : toggle
+module.exports = { style          : style
+                 , style_set      : style_set
+                 , classes        : classes
+                 , classes_add    : classes_add
+                 , classes_remove : classes_remove
+                 , classes_has_p  : classes_has_p
+                 , classes_toggle : classes_toggle
                    
                  , internal  : { style_computed: style_computed }
                  }

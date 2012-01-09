@@ -170,7 +170,7 @@ function make_node(subject) {
 // Constructs a brand new `Element` with the `tag'name  and given
 // `children'.
 //
-// make-element :: String, Properties, [Any] → Element
+// make-element :: String, Properties, [Any] -> Element
 function make_element(tag, props, children) {
   var elm
   elm = document.createElement(tag)
