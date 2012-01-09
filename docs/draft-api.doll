@@ -1,0 +1,96 @@
+
+# == The Moros API =====================================================
+# 
+# - Traversing the DOM tree.
+# - Manipulating the DOM tree.
+# - Inspecting nodes and elements.
+# - Reflecting on nodes and elements (?)
+# - Layout.
+# - Visual presentation core.
+# - Enhanced visual presentation (animations, etc).
+# - Providing generics for coupling [Nodes]
+
+Package dom
+  Module traversing
+    parent
+    children
+    siblings
+    next
+    previous
+
+    
+
+    # Convenience
+    nextUntil, previousUntil, nextWhile, previousWhile
+    
+    
+
+  Module form
+    serialise :: element:FormElement -> { String -> String | [String] }
+
+
+  Module manipulation
+    append!        :: parent:Node, child:Node -> parent
+    prepend!       :: parent:Node, child:Node -> parent
+    insert_after!  :: node:Node, insert:Node -> node
+    insert_before! :: node:Node, insert:Node -> node
+    remove!        :: parent:Node, child:Node -> node
+    detach!        :: node:Node -> node
+    replace!       :: node:Node, replacement:Node -> node
+    clear!         :: node:Node -> node
+    clone          :: node:Node -> node
+      
+
+  Module reflection
+    attributes     :: element:Element -> [Attribute]
+    attribute      :: element:Element, key:String -> Maybe String
+    attribute_set! :: element:Element, key:String, value:String -> element
+    html           :: element:Element -> String
+    html_set!      :: element:Element, value:String -> element
+    text           :: element:Element -> String
+    text_set!      :: element:Element, value:String -> element
+    value          :: element:Element -> String
+    value          :: element:MultipleSelect -> [String]
+    value_set!     :: element:Element, value:String -> element
+    value_set!     :: element:MultipleSelect, value:[String] -> element
+    is_p           :: element:Element, type:String -> Bool
+    
+      
+Module builder
+  html         :: { String -> (Properties?, Any... -> Element) }
+  text         :: Any -> Node
+  make_element :: String, Properties, [Any] -> Element
+  make_node    :: Any -> Node
+  make_node    :: element:Element -> element
+
+
+Package presentation
+  Module core
+    style           :: element:Element, property:String, computed:Bool -> String
+    style_set!      :: element:Element, property:String, value:String -> element
+    classes         :: Element -> [String]
+    classes_add!    :: element:Element, class:ClassList -> element
+    classes_remove! :: element:Element, class:ClassList -> element
+    classes_has_p   :: element:Element, class:ClassList -> Bool
+    classes_toggle! :: element:Element, class:ClassList -> element
+
+  Module
+    show    :: element:Element -> element
+    hide    :: element:Element -> element
+    toggle  :: element:Element -> element
+    move    :: element:Element, x:Number, y:Number -> element
+    resize  :: element:Element, width:Number, y:Number -> element
+    scale   :: element:Element, horizontal:Number, vertical:Number -> element
+    scroll  :: element:Element, x:Number, y:Number -> element
+    opacity :: element:Element, opacity:Float -> element
+  
+  Module effects
+    animate :: element:Element, css:Properties -> element
+
+  Module layout <| Base
+    width :: () -> Number
+    height :: () -> Number
+    x :: () -> Number
+    y :: () -> Number
+    
+  
