@@ -9,3 +9,4 @@ syntax:glob
 # -- Special directories -----------------------------------------------
 ignore
 dist
+node_modules
