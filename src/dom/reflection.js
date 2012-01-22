@@ -41,7 +41,7 @@ void function() {
   TEXT = 'innerText' in Element?            'innerText'
        : /* likely Gecko-based browsers */  'textContent'
 }()
-  
+
 
 
 //// - Node introspection -----------------------------------------------------
@@ -81,7 +81,7 @@ function attribute_set(node, key, value) {
 //
 // text :: Element -> String
 function text(node) {
-  return element[TEXT] }
+  return node[TEXT] }
 
 
 ///// Function text_set
