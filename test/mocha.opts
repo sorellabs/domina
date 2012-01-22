@@ -1,0 +1,3 @@
+--ui       bdd
+--reporter html
+--require  expect.js
