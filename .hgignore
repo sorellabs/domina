@@ -1,7 +1,11 @@
 syntax:glob
 
+# -- General backups ---------------------------------------------------
 *~
+*.orig
 \#*
 
+
+# -- Special directories -----------------------------------------------
 ignore
 dist
