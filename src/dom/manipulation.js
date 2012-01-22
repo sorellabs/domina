@@ -33,11 +33,13 @@ function append(parent, node) {
 //// Function prepend
 // prepend! :: parent:Node*, Node* -> parent
 function prepend(parent, node) {
-  return insert_before(parent.firstChild, node) }
+  return parent.firstChild?  insert_before(parent.firstChild, node)
+  :      /* otherwise */     append(parent, node) }
 
 //// Function insert_before
 // insert_before! :: node:Node*, Node* -> node
 function insert_before(node, insert) {
+
   node.parentNode.insertBefore(insert, node)
   return node }
 
