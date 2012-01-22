@@ -127,8 +127,10 @@ function set_props(elm, props) {
 function extend(target, source) {
   keys(source || {}).forEach(function(key) {
     var value = source[key]
-    if (callable_p(value))  target[key] = value()
-    else                    target[key] = value })
+    return key in target?      target[key]
+    :      callable_p(value)?  target[key] = value()
+    :      /* otherwise */     target[key] = value })
+
   return target }
 
 
