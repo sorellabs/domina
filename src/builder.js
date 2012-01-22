@@ -127,7 +127,7 @@ function set_props(elm, props) {
 // extend! :: target:Object*, Properties -> target
 function extend(target, source) {
   keys(source || {}).forEach(function(key) {
-    value = source[key]
+    var value = source[key]
     if (callable_p(value))  target[key] = value()
     else                    target[key] = value })
   return target }
@@ -160,7 +160,7 @@ function text(value) {
 // Ensures the `subject' is a `Node`, creating a `TextNode` if needed.
 //
 // make-node :: Element -> Element
-// make-node :: Any     -> Node 
+// make-node :: Any     -> Node
 function make_node(subject) {
   return element_p(subject)?   subject
   :   /* String-y? */          text(subject) }
@@ -194,10 +194,10 @@ function make_builder(tag) {
     var children
     children = [].slice.call(arguments, 1)
     if (!obj_p(props))  children.unshift(props), props = {}
-    
+
     return make_element(tag, extend(props, defaults[tag]), children) }}
-      
-  
+
+
 
 //// -Exports
 //// ------------------------------------------------------------------
