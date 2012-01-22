@@ -39,13 +39,13 @@ function prepend(parent, node) {
 // insert_before! :: node:Node*, Node* -> node
 function insert_before(node, insert) {
   node.parentNode.insertBefore(insert, node)
-  return element }
+  return node }
 
 //// Function insert_after
 // insert_after! :: node:Node*, Node* -> node
 function insert_after(node, insert) {
   node.parentNode.insertBefore(insert, node.nextSibling)
-  return element }
+  return node }
 
 //// Function remove
 // remove! :: parent:Node*, Node* -> Node
@@ -74,7 +74,7 @@ function clear(node) {
 
 //// Function clone
 // clone! :: node:Node, deep:Bool? -> node
-function clone(node) {
+function clone(node, deep) {
   return node.cloneNode(deep) }
 
 
