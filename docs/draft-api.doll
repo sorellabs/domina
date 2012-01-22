@@ -62,7 +62,7 @@ Module builder
   text         :: Any -> Node
   make_element :: String, Properties, [Any] -> Element
   make_node    :: Any -> Node
-  make_node    :: element:Element -> element
+  make_node    :: node:Node -> node
 
 
 Package presentation

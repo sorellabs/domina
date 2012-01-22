@@ -77,13 +77,12 @@ var tags =
 
 //// - Helper functions -------------------------------------------------------
 
-///// Function element_p
-// Checks if the `subject' is an `Element`.
+///// Function node_p
+// Checks if the `subject' is a `Node`.
 //
 // element_p :: Any -> Bool
-function element_p(subject) {
-  return 'nodeType' in Object(subject)
-  &&     subject.nodeType == Node.ELEMENT_NODE }
+function node_p(subject) {
+  return 'nodeType' in Object(subject) }
 
 
 ///// Function sequence_p
@@ -162,8 +161,8 @@ function text(value) {
 // make-node :: Element -> Element
 // make-node :: Any     -> Node
 function make_node(subject) {
-  return element_p(subject)?   subject
-  :   /* String-y? */          text(subject) }
+  return node_p(subject)?   subject
+  :      /* otherwise */    text(subject) }
 
 
 ///// Function make_element
@@ -208,7 +207,7 @@ module.exports = { defaults     : defaults
                  , make_element : make_element
                  , make_builder : make_builder
 
-                 , internals    : { element_p:       element_p
+                 , internals    : { node_p:          node_p
                                   , sequence_p:      sequence_p
                                   , callable_p:      callable_p
                                   , obj_p:           obj_p
