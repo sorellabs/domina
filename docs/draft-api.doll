@@ -37,6 +37,7 @@ Package dom
     remove!        :: parent:Node, child:Node -> node
     detach!        :: node:Node -> node
     replace!       :: node:Node, replacement:Node -> node
+    wrap!          :: node:Node, wrapper:Node -> node
     clear!         :: node:Node -> node
     clone          :: node:Node -> node
       

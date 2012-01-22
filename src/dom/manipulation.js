@@ -48,7 +48,7 @@ function insert_after(node, insert) {
   return node }
 
 //// Function remove
-// remove! :: parent:Node*, Node* -> Node
+// remove! :: parent:Node*, Node* -> parent
 function remove(parent, node) {
   parent.removeChild(node)
   return parent }
@@ -63,6 +63,13 @@ function detach(node) {
 // replace! :: node:Node*, Node* -> node
 function replace(node, replacement) {
   node.parentNode.replaceChild(node, replacement)
+  return node }
+
+//// Function wrap
+// wrap! :: node:Node*, wrapper:Node* -> node
+function wrap(node, wrapper) {
+  insert_before(node, wrapper)
+  wrapper.appendChild(node)
   return node }
 
 //// Function clear
@@ -88,5 +95,6 @@ module.exports = { append        : append
                  , detach        : detach
                  , replace       : replace
                  , clear         : clear
+                 , wrap          : wrap
                  , clone         : clone
                  }
