@@ -26,7 +26,11 @@ Package dom
     
 
   Module form
-    serialise :: element:FormElement -> { String -> String | [String] }
+    serialise  :: element:FormElement -> { String -> String | [String] }
+    value      :: element:Element -> String
+    value      :: element:MultipleSelect -> [String]
+    value_set! :: element:Element, value:String -> element
+    value_set! :: element:MultipleSelect, value:[String] -> element
 
 
   Module manipulation
@@ -50,10 +54,6 @@ Package dom
     html_set!      :: element:Element, value:String -> element
     text           :: element:Element -> String
     text_set!      :: element:Element, value:String -> element
-    value          :: element:Element -> String
-    value          :: element:MultipleSelect -> [String]
-    value_set!     :: element:Element, value:String -> element
-    value_set!     :: element:MultipleSelect, value:[String] -> element
     is_p           :: element:Element, type:String -> Bool
     
       
