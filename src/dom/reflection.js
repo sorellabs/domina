@@ -59,7 +59,9 @@ function attributes(node) {
 //
 // attribute :: Element, String -> Maybe String
 function attribute(node, key) {
-  return node.getAttribute(key) }
+  var value = node.getAttribute(key)
+  return value == null?   void value
+  :      /* otherwise */  value }
 
 
 ///// Function attribute_set
