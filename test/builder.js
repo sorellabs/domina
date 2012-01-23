@@ -1,4 +1,4 @@
-var builder = require('./builder')
+var builder = require('./moros').builder
 
 function to_html(el) {
   var x = document.createElement('div')
