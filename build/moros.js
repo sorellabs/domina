@@ -536,7 +536,9 @@ function attributes(node) {
 //
 // attribute :: Element, String -> Maybe String
 function attribute(node, key) {
-  return node.getAttribute(key) }
+  var value = node.getAttribute(key)
+  return value == null?   void value
+  :      /* otherwise */  value }
 
 
 ///// Function attribute_set
@@ -589,28 +591,6 @@ function html_set(node, value) {
   return node }
 
 
-///// Function value
-// Returns the `value` of a form input.
-//
-// value :: MultipleSelect -> [String]
-// value :: Element -> Maybe String
-function value(node) {
-  // :TODO: values for each kind of input
-  //   Different kinds of inputs treat `value` differently. We should
-  //   account for that.
-  return node.getAttribute('value') }
-
-
-///// Function value_set
-// Changes the `value` of a form input.
-//
-// value_set! :: element:MultipleSelect*, value:[String] -> element
-// value_set! :: element:Element*, value:String -> element
-function value_set(node, value) {
-  node.setAttribute('value', value)
-  return node }
-
-
 
 //// - Exports ----------------------------------------------------------------
 module.exports = { attributes    : attributes
@@ -620,8 +600,6 @@ module.exports = { attributes    : attributes
                  , text_set      : text_set
                  , html          : html
                  , html_set      : html_set
-                 , value         : value
-                 , value_set     : value_set
 
                  , internal      : { TEXT: TEXT }
                  }
