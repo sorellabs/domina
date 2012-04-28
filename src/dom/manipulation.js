@@ -39,7 +39,6 @@ function prepend(parent, node) {
 //// Function insert_before
 // insert_before! :: node:Node*, Node* -> node
 function insert_before(node, insert) {
-
   node.parentNode.insertBefore(insert, node)
   return node }
 
