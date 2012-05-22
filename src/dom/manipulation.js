@@ -23,47 +23,50 @@
 
 /// Module moros.manipulation
 
+var _ = require('../util')
 
 //// Function append
-// append! :: parent:Node*, Node* -> parent
-function append(parent, node) {
-  parent.appendChild(node)
+// append! :: parent:Node*, [Node]* -> parent
+function append(parent, xs) {
+  _.each(xs, function(node){ parent.appendChild(node) })
   return parent }
 
 //// Function prepend
-// prepend! :: parent:Node*, Node* -> parent
-function prepend(parent, node) {
-  return parent.firstChild?  insert_before(parent.firstChild, node)
-  :      /* otherwise */     append(parent, node) }
+// prepend! :: parent:Node*, [Node]* -> parent
+function prepend(parent, xs) {
+  _.each(xs, function(node){ parent.firstChild?  insert_before(parent.firstChild, node)
+                           : /* otherwise */     append(parent, node) })
+  return parent }
 
 //// Function insert_before
-// insert_before! :: node:Node*, Node* -> node
-function insert_before(node, insert) {
-  node.parentNode.insertBefore(insert, node)
+// insert_before! :: node:Node*, [Node]* -> node
+function insert_before(node, xs) {
+  _.each(xs, function(insert){ node.parentNode.insertBefore(insert, node) })
   return node }
 
 //// Function insert_after
-// insert_after! :: node:Node*, Node* -> node
-function insert_after(node, insert) {
-  node.parentNode.insertBefore(insert, node.nextSibling)
+// insert_after! :: node:Node*, [Node]* -> node
+function insert_after(node, xs) {
+  _.each(xs, function(insert){ node.parentNode.insertBefore(insert, node.nextSibling) })
   return node }
 
 //// Function remove
-// remove! :: parent:Node*, Node* -> parent
-function remove(parent, node) {
-  parent.removeChild(node)
+// remove! :: parent:Node*, [Node]* -> parent
+function remove(parent, xs) {
+  _.each(xs, function(node){ parent.removeChild(node) })
   return parent }
 
 //// Function detach
-// detach! :: node:Node* -> node
-function detach(node) {
-  node.parentNode.removeChild(node)
-  return node }
+// detach! :: node:[Node]* -> node
+function detach(xs) {
+  _.each(xs, function(node){ node.parentNode.removeChild(node) })
+  return xs }
 
 //// Function replace
-// replace! :: node:Node*, Node* -> node
-function replace(node, replacement) {
-  node.parentNode.replaceChild(node, replacement)
+// replace! :: node:Node*, [Node]* -> node
+function replace(node, xs) {
+  node.parent.replaceChild(node, _.first(xs))
+  insert_after(_.first(xs), _.rest(xs))
   return node }
 
 //// Function wrap
@@ -74,16 +77,16 @@ function wrap(node, wrapper) {
   return node }
 
 //// Function clear
-// clear! :: node:Node* -> node
-function clear(node) {
-  while (node.firstChild)
-    node.removeChild(node.firstChild)
-  return node }
+// clear! :: node:[Node]* -> node
+function clear(xs) {
+  _.each(xs, function(node){ while (node.firstChild)
+                               node.removeChild(node.firstChild) })
+  return xs }
 
 //// Function clone
-// clone! :: node:Node, deep:Bool? -> node
-function clone(node, deep) {
-  return node.cloneNode(deep) }
+// clone! :: node:[Node], deep:Bool? -> node
+function clone(xs, deep) {
+  return _.map(xs, function(node){ return node.cloneNode(deep) })}
 
 
 

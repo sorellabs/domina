@@ -26,6 +26,7 @@
 
 //// - Aliases ----------------------------------------------------------------
 var slice = [].slice
+var _     = require('../util')
 
 
 
@@ -49,19 +50,19 @@ void function() {
 ///// Function attributes
 // Returns the attributes set for an `Element'.
 //
-// attributes :: Element -> [Attribute]
-function attributes(node) {
-  return slice.call(node.attributes) }
+// attributes :: [Element] -> [[Attribute]]
+function attributes(xs) {
+  return _.map(xs, function(node){ return slice.call(node.attributes) })}
 
 
 ///// Function attribute
 // Returns the value of the attribute with the given `key'.
 //
-// attribute :: Element, String -> Maybe String
-function attribute(node, key) {
-  var value = node.getAttribute(key)
-  return value == null?   void value
-  :      /* otherwise */  value }
+// attribute :: [Element], String -> [Maybe String]
+function attribute(xs, key) {
+  return _.map(xs, function(node) { var value = node.getAttribute(key)
+                                    return value == null?   void value
+                                    :      /* otherwise */  value      })}
 
 
 ///// Function attribute_set
@@ -69,49 +70,49 @@ function attribute(node, key) {
 //
 // If the given value is `nil', the attribute is removed instead.
 //
-// attribute_set! :: Element*, String, String? -> element
-function attribute_set(node, key, value) {
-  value == null?     node.removeAttribute(key)
-  : /* otherwise */  node.setAttribute(key, value)
+// attribute_set! :: element:[Element]*, String, String? -> element
+function attribute_set(xs, key, value) {
+  _.each(xs, function(node){ value == null?     node.removeAttribute(key)
+                           : /* otherwise */  node.setAttribute(key, value) })
 
-  return node }
+  return xs }
 
 
 ///// Function text
 // Returns the content of the node as plain text, with HTML tags
 // stripped.
 //
-// text :: Element -> String
-function text(node) {
-  return node[TEXT] }
+// text :: [Element] -> String
+function text(xs) {
+  return _.map(xs, function(node){ return node[TEXT] })}
 
 
 ///// Function text_set
 // Changes the content of the node to hold a single text node with the
 // given value.
 //
-// text_set! :: element:Element*, String -> element
-function text_set(node, value) {
-  node[TEXT] = value
-  return node }
+// text_set! :: element:[Element]*, String -> element
+function text_set(xs, value) {
+  _.each(xs, function(node){ node[TEXT] = value })
+  return xs }
 
 
 ///// Function html
 // Returns the contents of the node as a serialised HTML representation.
 //
-// html :: Element -> String
-function html(node) {
-  return node.innerHTML }
+// html :: [Element] -> String
+function html(xs) {
+  return _.map(xs, function(node){ return node.innerHTML })}
 
 
 ///// Function html_set
 // Replaces the node's children structure by one constructed from the
 // given serialised HTML.
 //
-// html_set! :: element:Element*, String -> element
-function html_set(node, value) {
-  node.innerHTML = value
-  return node }
+// html_set! :: element:[Element]*, String -> element
+function html_set(xs, value) {
+  _.each(xs, function(node){ node.innerHTML = value })
+  return xs }
 
 
 

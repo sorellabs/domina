@@ -23,6 +23,8 @@
 
 /// Module moros.presentation.core
 
+var _ = require('../util')
+
 //// - Feature testing/helpers ------------------------------------------------
 var Element = document.createElement('div')
 
@@ -41,7 +43,12 @@ var style_computed = 'currentStyle' in Element?
 // Escapes an arbitrary String to be used as a ClassName regular
 // expression.
 function make_class_re(name) {
-  return new RegExp('\\b' + name.replace(/(\W)/g, '\\$1') + '\\b', 'gi') }
+  return new RegExp( '\\b'
+                   + name.trim()
+                         .replace(/([^\w\s])/g, '\\$1')
+                         .replace(/\s+/, '|')
+                   + '\\b'
+                   , 'gi') }
 
 
 //// - Core visual presentation -----------------------------------------------
@@ -51,13 +58,13 @@ function make_class_re(name) {
 // forcing them to be computed to reflect the current state of the
 // node.
 //
-// style :: Element, String, Bool? -> String
-function style(element, property, computed) {
+// style :: [Element], String, Bool? -> [String]
+function style(xs, property, computed) {
   // :TODO:
   //   Needs some interesting and efficient way of handling property
   //   transformations before setting the values.
-  return computed?        style_computed(element)[property]
-  :      /* otherwise */  element.style[property] }
+  return _.map(xs, function(element){ return computed?        style_computed(element)[property]
+                                    :        /* otherwise */  element.style[property] })}
 
 
 ///// Function style_set
@@ -67,55 +74,62 @@ function style(element, property, computed) {
 // precedence over properties defined directly in the CSS (unless
 // they're marked as `!important`).
 //
-// style_set! :: Element, String, Bool? -> String
-function style_set(element, property, value) {
-  element.style[property] = value
-  return element }
+// style_set! :: [Element], String, Bool? -> [Element]
+function style_set(xs, property, value) {
+  _.each(xs, function(element){ element.style[property] = value })
+  return xs }
 
 
 ///// Function classes
 // Returns a list of all the classes defined for the `element'.
 //
-// classes :: Element -> [String]
-function classes(element) {
-  return element.className.trim().split(/\s+/) }
+// classes :: [Element] -> [[String]]
+function classes(xs) {
+  return _.map(xs, function(element){ return element.className.trim().split(/\s+/) })}
 
 
 ///// Function classes_add
 // Adds a class to the `element'.
 //
-// classes_add! :: element:Element*, String -> element
-function classes_add(element, name) {
-  element.className += ' ' + name
-  return element }
+// classes_add! :: element:[Element]*, String -> element
+function classes_add(xs, name) {
+  _.each(xs, function(element){ element.className += ' ' + name })
+  return xs }
 
 
 ///// Function classes_remove
 // Removes a class from the `element'.
 //
-// classes_remove! :: element:Element*, String -> element
-function classes_remove(element, name) {
+// classes_remove! :: element:[Element]*, String -> element
+function classes_remove(xs, name) {
   var re = make_class_re(name)
-  element.className = element.className.replace(re, '')
-  return element }
+  _.each(xs, function(element){ element.className = element.className.replace(re, '') })
+  return xs }
 
 
 ///// Function classes_has_p
 // Does the `element' has the given class?
 //
-// classes_has_p :: Element, String -> Bool
-function classes_has_p(element, name) {
-  return element.className.test(make_class_re(name)) }
+// classes_has_p :: [Element], String -> [Bool]
+function classes_has_p(xs, name) {
+  return _.map(xs, function(element){ return element.className.test(make_class_re(name)) })}
 
 
 ///// Function classes_toggle
 // Toggles a class on the `element'. Such that it'll be removed if it's
 // present, or added otherwise.
 //
-// classes_toggle! :: element:Element, String -> element
-function classes_toggle(element, name) {
-  return classes_has_p(element, name)?  classes_remove(element, name)
-  :      /* otherwise */                classes_add(element, name) }
+// A state may also be explicitly given, in which case we'll take that
+// state to represent the existence or not of the class.
+//
+// classes_toggle! :: element:[Element], String -> element
+// classes_toggle! :: element:[Element], String, Boolean -> element
+function classes_toggle(xs, name, state) {
+  _.each(xs, function(element){ var has = state == null?   classes_has_p(element, name)
+                                        : /* otherwise */  state
+
+                                return has?             classes_remove(element, name)
+                                :      /* otherwise */  classes_add(element, name) })}
 
 
 
@@ -127,6 +141,6 @@ module.exports = { style          : style
                  , classes_remove : classes_remove
                  , classes_has_p  : classes_has_p
                  , classes_toggle : classes_toggle
-                   
+
                  , internal  : { style_computed: style_computed }
                  }

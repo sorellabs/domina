@@ -32,12 +32,9 @@ void function() {
                                        , target: '_blank'
                                        , 'data-foo': 'bar' }
                                      , [])
-        expect(el).to.have.property('title', 'foo')
-        expect(el).to.have.property('target', '_blank')
         expect(el.getAttribute('title')).to.equal('foo')
         expect(el.getAttribute('target')).to.equal('_blank')
         expect(el.getAttribute('data-foo')).to.equal('bar')
-        expect(el).to.not.have.property('data-foo')
       })
       it('- Should append the given elements to the new Element.', function() {
         var b = builder.make_element('b', {}, [])
