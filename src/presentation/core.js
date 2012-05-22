@@ -125,11 +125,9 @@ function classes_has_p(xs, name) {
 // classes_toggle! :: element:[Element], String -> element
 // classes_toggle! :: element:[Element], String, Boolean -> element
 function classes_toggle(xs, name, state) {
-  _.each(xs, function(element){ var has = state == null?   classes_has_p(element, name)
-                                        : /* otherwise */  state
-
-                                return has?             classes_remove(element, name)
-                                :      /* otherwise */  classes_add(element, name) })}
+  var has_p = state == null?  classes_has_p : _.k(state)
+  _.each(xs, function(element){ return has_p(element, name)?  classes_remove(element, name)
+                              :        /* otherwise */        classes_add(element, name) })}
 
 
 

@@ -38,6 +38,10 @@ function rest(xs) {
 function id(x) {
   return x }
 
+function k(x) {
+  return function() {
+           return x }}
+
 function each(xs, f) {
   xs = sequence(xs)
   f  = f || id
@@ -58,5 +62,6 @@ module.exports = { sequence: sequence
                  , first: first
                  , rest: rest
                  , id: id
+                 , k: k
                  , each: each
                  , map:  map }
