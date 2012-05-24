@@ -1,4 +1,4 @@
-/// moros.js --- Main interface for Browsers.
+/// moros.js --- A minimal and modular DOOM library
 //
 // Copyright (c) 2012 Quildreen Motta
 //
@@ -22,6 +22,11 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /// Module moros
-module.exports = { dom          : require('./dom')
-                 , presentation : require('./presentation')
-                 }
+
+var _ = require('pandora')
+module.exports = function(engine) {
+  return _.merge( _(require('./query')(engine))
+                , _(require('./manipulation'))
+                , _(require('./reflection'))
+                , _(require('./presentation'))
+                )}

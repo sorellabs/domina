@@ -21,9 +21,9 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/// Module moros.presentation.core
+/// Module moros.presentation
 
-var _ = require('../util')
+var _ = require('./util')
 
 //// - Feature testing/helpers ------------------------------------------------
 var Element = document.createElement('div')

@@ -23,7 +23,7 @@
 
 /// Module moros.manipulation
 
-var _ = require('../util')
+var _ = require('./util')
 
 //// Function append
 // append! :: parent:Node*, [Node]* -> parent

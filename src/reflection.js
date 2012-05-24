@@ -25,8 +25,7 @@
 
 
 //// - Aliases ----------------------------------------------------------------
-var slice = [].slice
-var _     = require('../util')
+var _ = require('./util')
 
 
 
@@ -52,7 +51,7 @@ void function() {
 //
 // attributes :: [Element] -> [[Attribute]]
 function attributes(xs) {
-  return _.map(xs, function(node){ return slice.call(node.attributes) })}
+  return _.map(xs, function(node){ return _.slice(node.attributes) })}
 
 
 ///// Function attribute
@@ -72,7 +71,7 @@ function attribute(xs, key) {
 //
 // attribute_set! :: element:[Element]*, String, String? -> element
 function attribute_set(xs, key, value) {
-  _.each(xs, function(node){ value == null?     node.removeAttribute(key)
+  _.each(xs, function(node){ value == null?   node.removeAttribute(key)
                            : /* otherwise */  node.setAttribute(key, value) })
 
   return xs }

@@ -23,7 +23,11 @@
 
 /// Module moros.utils
 
-var slice = [].slice
+var _slice = [].slice
+
+function slice(xs, start, end) {
+  return arguments.length == 2?  _slice.call(xs, start)
+  :      /* otherwise */         _slice.call(xs, start, end) }
 
 function sequence(x) {
   return x && x.length?    x
@@ -33,7 +37,7 @@ function first(xs) {
   return Object(xs)[0] }
 
 function rest(xs) {
-  return slice.call(xs, 1) }
+  return slice(xs, 1) }
 
 function id(x) {
   return x }
@@ -59,6 +63,7 @@ function map(xs, f) {
 
 
 module.exports = { sequence: sequence
+                 , slice: slice
                  , first: first
                  , rest: rest
                  , id: id

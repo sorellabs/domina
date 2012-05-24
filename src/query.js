@@ -1,4 +1,4 @@
-/// index.js --- The basics of DOM manipulation
+/// query.js --- Querying elements
 //
 // Copyright (c) 2012 Quildreen Motta
 //
@@ -21,6 +21,12 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/// Package moros.dom
-exports.manipulation = require('./manipulation')
-exports.reflection   = require('./reflection')
+/// Module moros.query
+
+module.exports = function(engine) {
+  var to_array = require('./util').slice
+
+  function query_selector_all(selector, context) {
+    return to_array((context || document).querySelectorAll(selector)) }
+
+  return { query: engine || query_selector_all }}
