@@ -23,10 +23,21 @@
 
 /// Module moros
 
-var _ = require('pandora')
+var slice = [].slice
+var keys  = Object.keys
+
+function extend(target, source) {
+  keys(source).forEach(function(key){ target[key] = source[key] })
+  return target }
+
+function merge() {
+  return slice.call(arguments)
+              .reduce(function(result, source) { return extend(result, source) }, {})}
+
+
 module.exports = function(engine) {
-  return _.merge( _(require('./query')(engine))
-                , _(require('./manipulation'))
-                , _(require('./reflection'))
-                , _(require('./presentation'))
-                )}
+  return merge( require('./query')(engine)
+              , require('./manipulation')
+              , require('./reflection')
+              , require('./presentation')
+              )}

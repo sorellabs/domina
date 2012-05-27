@@ -30,8 +30,8 @@ function slice(xs, start, end) {
   :      /* otherwise */         _slice.call(xs, start, end) }
 
 function sequence(x) {
-  return x && x.length?    x
-  :      /* otherwise */  [x] }
+  return x && 'length' in x?  x
+  :      /* otherwise */     [x] }
 
 function first(xs) {
   return Object(xs)[0] }
@@ -58,8 +58,8 @@ function map(xs, f) {
   f  = f || id
   var i, len = xs.length
   var result = []
-  for (i = 0; i < len; ++i) result.push(xs[i], i, xs)
-  return xs }
+  for (i = 0; i < len; ++i) result.push(f(xs[i], i, xs))
+  return result }
 
 
 module.exports = { sequence: sequence
