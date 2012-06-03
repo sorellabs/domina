@@ -25,6 +25,7 @@
 
 var slice = [].slice
 var keys  = Object.keys
+var utils = require('./util')
 
 function extend(target, source) {
   keys(source).forEach(function(key){ target[key] = source[key] })
@@ -40,4 +41,6 @@ module.exports = function(engine) {
               , require('./manipulation')
               , require('./reflection')
               , require('./presentation')
+              , { each: utils.each
+                , map:  utils.map }
               )}
