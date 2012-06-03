@@ -1,4 +1,4 @@
-/// moros.js --- A minimal and modular DOOM library
+/// event.js --- Binding events to the DOOM
 //
 // Copyright (c) 2012 Quildreen Motta
 //
@@ -21,27 +21,29 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/// Module moros
+/// Module moros.event
 
-var slice = [].slice
-var keys  = Object.keys
-var utils = require('./util')
+module.exports = function(event) {
 
-function extend(target, source) {
-  keys(source).forEach(function(key){ target[key] = source[key] })
-  return target }
+  var e = document.createElement('div')
 
-function merge() {
-  return slice.call(arguments)
-              .reduce(function(result, source) { return extend(result, source) }, {})}
+  var on    = 'addEventListener' in e?
+  /* W3C */   function _on(el, event, handler) {
+                return el.addEventListener(event, handler, false) }
+            :
+  /* IE */    function _on(el, event, handler) {
+                return el.attachEvent('on' + event, handler) }
 
 
-module.exports = function(engine, events) {
-  return merge( require('./query')(engine)
-              , require('./manipulation')
-              , require('./reflection')
-              , require('./presentation')
-              , require('./event')(events)
-              , { each: utils.each
-                , map:  utils.map }
-              )}
+  var remove = 'removeEventListener' in e?
+  /* W3C */    function _remove(el, event, handler) {
+                 return el.removeEventListener(event, handler, false) }
+             :
+  /* IE */     function _remove(el, event, handler) {
+                 return el.detachEvent('on' + event, handler) }
+
+
+  return event
+  ||     { on     : on
+         , remove : remove }
+}
