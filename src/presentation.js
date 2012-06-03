@@ -43,11 +43,11 @@ var style_computed = 'currentStyle' in Element?
 // Escapes an arbitrary String to be used as a ClassName regular
 // expression.
 function make_class_re(name) {
-  return new RegExp( '\\b'
+  return new RegExp( '\\s*\\b'
                    + name.trim()
                          .replace(/([^\w\s])/g, '\\$1')
                          .replace(/\s+/, '|')
-                   + '\\b'
+                   + '\\b\\s*'
                    , 'gi') }
 
 
@@ -93,6 +93,7 @@ function classes(xs) {
 //
 // classes_add! :: element:[Element]*, String -> element
 function classes_add(xs, name) {
+  classes_remove(xs, name)
   _.each(xs, function(element){ element.className += ' ' + name })
   return xs }
 
