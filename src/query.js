@@ -29,4 +29,5 @@ module.exports = function(engine) {
   function query_selector_all(selector, context) {
     return to_array((context || document).querySelectorAll(selector)) }
 
-  return { query: engine || query_selector_all }}
+  return { query: engine || query_selector_all }
+}
