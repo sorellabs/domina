@@ -48,7 +48,7 @@ k = (x) -> -> x
 # Returns the first item of a list.
 #
 # head :: [a] -> Maybe a
-head = (xs) -> xs[0]
+head = (xs) -> xs.0
 
 
 #### Function tail
