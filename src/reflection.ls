@@ -1,4 +1,4 @@
-/** utils.ls --- Shared utilities
+/** reflection.ls --- Provides information about nodes.
  *
  * Version: -:version:-
  *
