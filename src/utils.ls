@@ -103,12 +103,13 @@ map(f, xs) = [(f x) for x in as-sequence xs]
 
 
 #### Exports ###########################################################
-module.exports =
-  as-sequence : as-sequence
-  to-array    : to-array
-  head        : head
-  tail        : tail
-  id          : id
-  k           : k
-  each        : each
-  map         : map
+module.exports = {
+  as-sequence
+  to-array
+  head
+  tail
+  id
+  k
+  each
+  map
+}

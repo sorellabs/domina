@@ -72,5 +72,4 @@ module.exports = (engine) ->
     query-one : (selector, context) -> head (engine selector, context)
 
   else          # Otherwise uses the available DOM selection methods
-    query     : query
-    query-one : query-one
+    { query, query-one }

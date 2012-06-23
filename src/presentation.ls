@@ -175,13 +175,14 @@ specify-class-state(name, should-add-p) = each ->
 
 
 ### Exports ############################################################
-module.exports =
-  style               : style
-  computed-style      : computed-style
-  set-style           : set-style
-  classes             : classes
-  add-class           : add-class
-  remove-class        : remove-class
-  has-class-p         : has-class-p
-  toggle-class        : toggle-class
-  specify-class-state : specify-class-state
+module.exports = {
+  style
+  computed-style
+  set-style
+  classes
+  add-class
+  remove-class
+  has-class-p
+  toggle-class
+  specify-class-state
+}

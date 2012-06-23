@@ -112,11 +112,12 @@ set-html = (value) -> each ->
 
 
 ### Exports ############################################################
-module.exports =
-  attributes    : attributes
-  attribute     : attribute
-  set-attribute : set-attribute
-  text          : text
-  set-text      : set-text
-  html          : html
-  set-html      : set-html
+module.exports = {
+  attributes
+  attribute
+  set-attribute
+  text
+  set-text
+  html
+  set-html
+}

@@ -138,14 +138,15 @@ clone = (deep) ->
 
 
 #### Exports ###########################################################
-module.exports =
-  append        : append
-  prepend       : prepend
-  insert-before : insert-before
-  insert-after  : insert-after
-  remove        : remove
-  detach        : detach
-  replace       : replace
-  clear         : clear
-  wrap          : wrap
-  clone         : clone
+module.exports = {
+  append
+  prepend
+  insert-before
+  insert-after
+  remove
+  detach
+  replace
+  clear
+  wrap
+  clone
+}
