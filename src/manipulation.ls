@@ -28,7 +28,7 @@
 ## Module moros.manipulation ###########################################
 
 ### == Dependencies ====================================================
-{map, each, head, tail} = require \./util
+{map, each, head, tail} = require \./utils
 
 
 

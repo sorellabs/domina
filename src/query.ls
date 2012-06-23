@@ -29,7 +29,7 @@
 module.exports = (engine) ->
 
   ### == Dependencies ==================================================
-  {head}   = require \./util
+  {head}   = require \./utils
 
 
   
