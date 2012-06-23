@@ -53,10 +53,10 @@ module.exports = (event) ->
   
   ### == IE wrappers ===================================================
   ie-listen(event, handler) = each ->
-    it.attach-event "on#{event}", handler
+    it.attach-event "on#{event}" handler
 
   ie-remove(event, handler) = each ->
-    it.detach-event "on#{event}", handler
+    it.detach-event "on#{event}" handler
 
 
   
