@@ -4,13 +4,18 @@
   "description": "DOM handling library",
   "version": "0.3.0",
   "repository": {
-    "url": ""
+    "url": "git://github.com/killdream/moros.git"
   },
-  "main": "./lib",
+  "main": "./lib/index.js",
   "engines": {
     "node": "~0.6.7"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": { "mocha": "*"
+                     , "LiveScript": "*"
+                     , "browserify": "*"
+                     , "noire": "*"
+                     , "sinon": "*"
+                     , "slake-build-utils": "*" },
   "optionalDependencies": {}
 }
