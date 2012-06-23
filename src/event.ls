@@ -34,7 +34,7 @@ module.exports = (event) ->
 
 
   #### Function has-p
-  # Checks if the DOOM ipmlementation acknowledges the given message for
+  # Checks if the DOOM implementation acknowledges the given message for
   # Nodes.
   #
   # has? :: String -> Bool
