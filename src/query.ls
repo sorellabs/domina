@@ -1,6 +1,6 @@
 /** query.ls --- Selects a set of nodes using CSS selectors
  *
- * Version: -:version:-
+ * Version: -:package.version:-
  *
  * Copyright (c) 2012 Quildreen Motta
  *

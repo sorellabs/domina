@@ -1,6 +1,6 @@
 /** index.ls --- A minimal and modular DOOM library
  *
- * Version: -:version:-
+ * Version: -:package.version:-
  *
  * Copyright (c) 2012 Quildreen Motta
  *

@@ -1,6 +1,6 @@
 /** presentation.ls --- Core visual presentation handling
  *
- * Version: -:version:-
+ * Version: -:package.version:-
  *
  * Copyright (c) 2012 Quildreen Motta
  *

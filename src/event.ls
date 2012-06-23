@@ -1,6 +1,6 @@
 /** event.ls --- Manages events on DOOM nodes
  *
- * Version: -:version:-
+ * Version: -:package.version:-
  *
  * Copyright (c) 2012 Quildreen Motta
  *
