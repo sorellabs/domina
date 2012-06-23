@@ -89,9 +89,7 @@ to-array = Function.call.bind [].slice
 # each :: (a -> ()) -> xs:[a] -> xs
 each(f, xs) =
   xs = as-sequence xs
-  f  = f || id
-  for x, i in xs
-    f x
+  for x, i in xs => f x
   xs
 
 
@@ -100,10 +98,7 @@ each(f, xs) =
 # functor.
 #
 # map :: (a -> b) -> [a] -> [b]
-map(f, xs) =
-  xs = as-sequence xs
-  f  = f || id
-  [(f x) for x in xs]
+map(f, xs) = [(f x) for x in as-sequence xs]
 
 
 
