@@ -99,5 +99,4 @@ module.exports = (event) ->
     event
 
   else        # Uses the standard DOM APIs
-    listen: listen
-    remove: remove
+    { listen, remove }
