@@ -92,7 +92,7 @@ detach = each -> it.parent-node.remove-child node
 # replace! :: Node* -> xs:[Node*] -> xs
 replace(node, xs) =
   node.parent.replace-child node, head xs
-  insert-after head xs, tail xs
+  insert-after (head xs), (tail xs)
   node
 
 
