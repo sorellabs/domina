@@ -11,7 +11,7 @@ event-checker(listen, event) =
   target.parent-node.remove-child target
 
 Describe '{} event ‹Native›' ->
-  {listen, deafen} = (require \moros/src/event)!
+  {listen, deafen} = (require \../src/event)!
   check-event      = event-checker listen
 
   spy  = null

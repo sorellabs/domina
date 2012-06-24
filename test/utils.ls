@@ -1,5 +1,5 @@
 Describe '{} utils' ->
-  {each, map} = require \moros/src/utils
+  {each, map} = require \../src/utils
   ensure      = require \noire .ensure
 
   spy = ys = null

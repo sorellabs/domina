@@ -30,7 +30,7 @@ test-single(ensure, query) =
 
 
 Describe '{} query ‹Native›' ->
-  {query, query-one}  = (require \moros/src/query)!
+  {query, query-one}  = (require \../src/query)!
 
   before-each moros-reset-dom
 

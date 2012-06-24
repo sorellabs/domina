@@ -1,6 +1,6 @@
 Describe '{} manipulation' ->
   ensure = require \noire .ensure
-  _      = require \moros/src/manipulation
+  _      = require \../src/manipulation
 
   before-each moros-reset-dom
   get = (id)   -> document.get-element-by-id id
