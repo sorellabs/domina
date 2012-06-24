@@ -61,7 +61,7 @@ module.exports = (engine) ->
   #
   # query-one :: Selector, Element? -> Maybe Element
   query-one = (selector, context = document) ->
-    to-array context.querySelector selector
+    context.querySelector selector
 
 
   
