@@ -55,7 +55,7 @@ task \test 'Generates test artifacts for Mocha.' ->
   "suite" |> _.tasks.bundle \test/build {+bare, +prelude} [\test/suite.ls]
 
 task \test:continuous 'Continuously generates test artifacts for Mocha.' ->
-  _.header "—› Watching `test/' directory for changes..."
-  watch.add \./test .on-change (file, previous, current, action) ->
+  _.header "—› Watching `test/' and `src/' directories for changes..."
+  watch.add \./test .add \./src .on-change (file, previous, current, action) ->
     console.log (_.yellow "‹#{action.toUpperCase!}› `#file' has been #{show action}.")
     invoke \test
