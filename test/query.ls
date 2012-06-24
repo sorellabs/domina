@@ -8,12 +8,12 @@ selectors =
   '#xs img[data-boo="2"]': 0
   '#xs div[class~="y"]': 1
   '#xs div[class~="a"]': 0
-  '#xs img[src^="bl"]': 2
-  '#xs img[src^="ah"]': 0
-  '#xs img[src$="ah"]': 1
-  '#xs img[src$="bl"]': 0
-  '#xs img[src*="la"]': 1
-  '#xs img[src*="gb"]': 0
+  '#xs img[alt^="bl"]': 2
+  '#xs img[alt^="ah"]': 0
+  '#xs img[alt$="ah"]': 1
+  '#xs img[alt$="bl"]': 0
+  '#xs img[alt*="la"]': 1
+  '#xs img[alt*="gb"]': 0
   '#xs a[lang|="en"]': 1
   '#xs > a[lang|="pt"]': 0
 
@@ -31,6 +31,8 @@ test-single(ensure, query) =
 
 Describe '{} query ‹Native›' ->
   {query, query-one}  = (require \moros/src/query)!
+
+  before-each moros-reset-dom
 
   Describe 'λ query' ->
     It 'Should return a set of elements.' ->
