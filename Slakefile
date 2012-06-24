@@ -39,3 +39,8 @@ task \package 'Packages Moros in a nice .tar.gz package.' ->
   fs.initialise \dist
   fs.copy \build "dist/moros-#version"
   _.tasks.pack \dist "moros-#version" ["moros-#version"] _.display-errors
+
+
+task \test 'Generates test artifacts for Mocha.' ->
+  defer _.display-errors
+  "suite" |> _.tasks.bundle \test/browser {+bare, +prelude} [\test/browser/suite.ls]
