@@ -16,6 +16,8 @@
                      , "browserify": "*"
                      , "noire": "*"
                      , "sinon": "*"
-                     , "slake-build-utils": "*" },
+                     , "slake-build-utils": "*"
+                     , "buster-format": "*"
+                     },
   "optionalDependencies": {}
 }
