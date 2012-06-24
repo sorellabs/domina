@@ -1,17 +1,50 @@
+== Interfaces ==========================================================
+
 Interface Sequence
   length :: UInt32
 
+Interface EventManager
+  listen :: EventType -> (Event -> IO Bool) -> [Node] -> ()
+  remove :: EventType -> (Event -> IO Bool) -> [Node] -> ()
+
+type SelectorEngine = Selector, Element? -> [Element]
+
 type Selector  = String
 type EventType = String
-type Classes   = Array String | String
+type Classes   = [String] | String
 
-Module query
+
+== Modules =============================================================
+
+Package moros SelectorEngine a, EventManager b
+  {map, each} << utils
+  << query a
+  << event b
+  << manipulation
+  << reflection
+  << presentation
+  
+
+Module utils
+  id          :: a -> a
+  k           :: a -> b -> a
+  head        :: [a] -> Maybe a
+  tail        :: [a] -> [a]
+  as-sequence :: [a] -> [a]
+  as-sequence :: a -> [a]
+  each        :: (a -> ()) -> xs:[a] -> xs
+  map         :: (a -> b) -> [a] -> [b]
+
+
+Module query SelectorEngine
   query     :: Selector -> [Node]
   query-one :: Selector -> Node
 
-Module eventing
-  listen! :: (Event -> IO Bool) -> String -> Node -> ()
-  deafen! :: (Event -> IO Bool) -> String -> Node -> ()
+
+Module event EventManager
+  listen! :: EventType -> (Event -> IO Bool) -> [Node] -> ()
+  deafen! :: EventType -> (Event -> IO Bool) -> [Node] -> ()
+
 
 Module manipulation
   append!        :: Node* -> xs:[Node*] -> xs
@@ -20,29 +53,31 @@ Module manipulation
   insert-after!  :: Node* -> xs:[Node*] -> xs
   detach!        :: xs:Node* -> xs
   replace!       :: Node* -> xs:[Node*] -> xs
-  wrap!          :: Node* -> xs:[Node*] -> xs
-  clear!         :: xs:Node* -> xs
-  clone          :: Bool -> xs:[Node] -> xs
+  wrap!          :: Node* -> x:Node* -> x
+  clear          :: xs:Node* -> xs
+  clone          :: Bool -> [Node] -> [Node]
+
 
 Module reflection
-  attributes     :: [Node] -> [[Attribute]]
-  attribute      :: String -> [Node] -> [Maybe String]
-  set-attribute! :: String -> Maybe String -> xs:[Node*] -> xs
-  text           :: [Node] -> [String]
-  set-text!      :: String -> xs:[Node*] -> xs
-  html           :: [Node] -> [String]
-  set-html!      :: String -> xs:[Node*] -> xs
-  value          :: [Node] -> [String | [String]]
-  set-value!     :: String -> xs:[Node*] -> xs
-  set-value!     :: [String] -> xs:[MultiSelect*] -> xs
+  attributes    :: [Node] -> [[Attribute]]
+  attribute     :: String -> [Node] -> [Maybe String]
+  set-attribute :: String -> Maybe String -> xs:[Node*] -> xs
+  text          :: [Node] -> [String]
+  set-text      :: String -> xs:[Node*] -> xs
+  html          :: [Node] -> [String]
+  set-html      :: String -> xs:[Node*] -> xs
+  value         :: [Node] -> [String | [String]]
+  set-value     :: String -> xs:[Node*] -> xs
+  set-value     :: [String] -> xs:[MultiSelect*] -> xs
+
 
 Module presentation
-  style                :: String -> [Node] -> [Maybe String]
-  computed-style       :: String -> [Node] -> [Maybe String]
-  set-style!           :: String -> String -> xs:[Node*] -> xs
-  classes              :: [Node] -> [[String]]
-  add-class!           :: Classes -> xs:[Node*] -> xs
-  remove-class!        :: Classes -> xs:[Node*] -> xs
-  has-class-p          :: Classes -> xs:[Node*] -> [Bool]
-  toggle-class!        :: Classes -> xs:[Node*] -> xs
-  specify-class-state! :: Classes -> Bool -> xs:[Node*] -> xs
+  style               :: String -> [Node] -> [Maybe String]
+  computed-style      :: String -> [Node] -> [Maybe String]
+  set-style           :: String -> String -> xs:[Node*] -> xs
+  classes             :: [Node] -> [[String]]
+  add-class           :: Classes -> xs:[Node*] -> xs
+  remove-class        :: Classes -> xs:[Node*] -> xs
+  has-class-p         :: Classes -> xs:[Node*] -> [Bool]
+  toggle-class        :: Classes -> xs:[Node*] -> xs
+  specify-class-state :: Classes -> Bool -> xs:[Node*] -> xs
