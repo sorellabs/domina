@@ -63,7 +63,7 @@ tail = (xs) -> xs.slice 1
 #
 # sequence? :: a -> Bool
 sequence-p = (x) ->
-  x && \length of x
+  x && x.length >= 0
 
 
 #### Function sequence
