@@ -38,18 +38,17 @@
 # Adds one or more nodes as a the last children of a parent node.
 #
 # append! :: Node* -> xs:[Node*] -> xs
-append = (parent) ->
-  each -> it.append-child node
+append(parent, xs) = xs |> each ->
+  it.append-child node
 
 
 #### Function prepend
 # Adds one or more nodes as the first children of a parent node.
 #
 # prepend! :: Node* -> xs:[Node*] -> xs
-prepend = (parent) ->
-  each ->
-    | parent.first-child =>  insert-before parent.first-child, it
-    | otherwise          =>  append parent, it
+prepend(parent, xs) = xs |> each ->
+  | parent.first-child =>  insert-before parent.first-child, it
+  | otherwise          =>  append parent, it
 
 
 #### Function insert-before
@@ -57,8 +56,8 @@ prepend = (parent) ->
 # tree.
 #
 # insert-before :: Node* -> xs:[Node*] -> xs
-insert-before = (x) ->
-  each -> x.parent-node.insert-before it, x
+insert-before(x, xs) = xs |> each ->
+  x.parent-node.insert-before it, x
 
 
 #### Function insert-after
@@ -66,8 +65,8 @@ insert-before = (x) ->
 # tree.
 #
 # insert-after :: Node* -> xs:[Node*] -> xs
-insert-after  = (x) ->
-  each -> x.parent-node.insert-before it, x.next-sibling
+insert-after(x, xs) = xs |> each ->
+  x.parent-node.insert-before it, x.next-sibling
 
 
 #### Function remove
@@ -75,8 +74,8 @@ insert-after  = (x) ->
 # parent.
 #
 # remove! :: Node* -> xs:[Node*] -> xs
-remove = (parent) ->
-  each -> parent.remove-child it
+remove(parent, xs) = xs |> each ->
+  parent.remove-child it
 
 
 #### Function detach
@@ -132,8 +131,8 @@ clear = each ->
 # the screen.
 #
 # clone :: Bool -> [Node] -> [Node]
-clone = (deep) ->
-  map -> it.clone-node deep
+clone(deep, xs) = xs |> map ->
+  it.clone-node deep
 
 
 
