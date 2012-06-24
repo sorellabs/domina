@@ -111,10 +111,9 @@ wrap(node, x) =
 # Removes all direct children of the given nodes.
 #
 # clear! :: xs:[Node*] -> xs
-clear = each ->
-  while node.first-child
-    node.remove-child node.first-child
-  void
+clear = each !->
+  while it.first-child
+    it.remove-child it.first-child
 
 
 #### Function clone
