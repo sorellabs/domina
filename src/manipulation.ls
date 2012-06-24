@@ -28,7 +28,7 @@
 ## Module moros.manipulation ###########################################
 
 ### == Dependencies ====================================================
-{map, each, head, tail} = require \./utils
+{map, each, head, tail, as-sequence} = require \./utils
 
 
 
@@ -90,9 +90,10 @@ detach = each -> it.parent-node.remove-child it
 #
 # replace! :: Node* -> xs:[Node*] -> xs
 replace(node, xs) =
-  node.parent.replace-child node, head xs
+  xs = as-sequence xs
+  node.parent-node.replace-child (head xs), node
   insert-after (head xs), (tail xs)
-  node
+  xs
 
 
 #### Function wrap
