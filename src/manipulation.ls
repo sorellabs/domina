@@ -82,7 +82,7 @@ remove(parent, xs) = xs |> each ->
 # Removes one or more nodes from the DOOM tree.
 #
 # detach! :: xs:[Node*] -> xs
-detach = each -> it.parent-node.remove-child node
+detach = each -> it.parent-node.remove-child it
 
 
 #### Function replace
