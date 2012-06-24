@@ -39,7 +39,7 @@
 #
 # append! :: Node* -> xs:[Node*] -> xs
 append(parent, xs) = xs |> each ->
-  it.append-child node
+  parent.append-child it
 
 
 #### Function prepend
@@ -48,7 +48,7 @@ append(parent, xs) = xs |> each ->
 # prepend! :: Node* -> xs:[Node*] -> xs
 prepend(parent, xs) = xs |> each ->
   | parent.first-child =>  insert-before parent.first-child, it
-  | otherwise          =>  append parent, it
+  | otherwise          =>  parent.append-child it
 
 
 #### Function insert-before
