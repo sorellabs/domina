@@ -29,6 +29,11 @@
 module.exports = (event) ->
 
   
+  ### == Dependencies ==================================================
+  {each} = require \./utils
+
+
+  
   ### == Helpers =======================================================
   e = document.createElement \div
 
@@ -43,19 +48,19 @@ module.exports = (event) ->
 
   
   ### == W3C wrappers ==================================================
-  w3c-listen(event, handler) = each ->
+  w3c-listen(event, handler, xs) = xs |> each ->
     it.add-event-listener event, handler, false
 
-  w3c-remove(event, handler) = each ->
+  w3c-remove(event, handler, xs) = xs |> each ->
     it.remove-event-listener event, handler, false
 
 
   
   ### == IE wrappers ===================================================
-  ie-listen(event, handler) = each ->
+  ie-listen(event, handler, xs) = xs |> each ->
     it.attach-event "on#{event}" handler
 
-  ie-remove(event, handler) = each ->
+  ie-remove(event, handler, xs) = xs |> each ->
     it.detach-event "on#{event}" handler
 
 
