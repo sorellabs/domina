@@ -1,6 +1,8 @@
-_     = require \slake-build-utils
-fs    = _.fs
 glob  = require \glob .sync
+watch = require \nodewatch
+
+_  = require \slake-build-utils
+fs = _.fs
 
 global <<< require \prelude-ls
 
@@ -9,6 +11,13 @@ defer = process.next-tick
 defaults    = void
 environment =
   package: require \./package.json
+
+
+show = (x) ->
+  | x is 'new'    => 'created'
+  | x is 'delete' => 'removed'
+  | x is 'change' => 'modified'
+
 
 
 task \clean 'Removes all build artifacts.' ->
@@ -44,3 +53,9 @@ task \package 'Packages Moros in a nice .tar.gz package.' ->
 task \test 'Generates test artifacts for Mocha.' ->
   defer _.display-errors
   "suite" |> _.tasks.bundle \test/build {+bare, +prelude} [\test/suite.ls]
+
+task \test:continuous 'Continuously generates test artifacts for Mocha.' ->
+  _.header "—› Watching `test/' directory for changes..."
+  watch.add \./test .on-change (file, previous, current, action) ->
+    console.log (_.yellow "‹#{action.toUpperCase!}› `#file' has been #{show action}.")
+    invoke \test
