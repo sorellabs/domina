@@ -1,0 +1,58 @@
+ensure = require \noire .ensure
+window <<< {require}
+
+selectors =
+  '#xs *': 5
+  '#xs a': 2
+  '#xs a[data-boo]': 0
+  '#xs img[data-boo="1"]': 1
+  '#xs img[data-boo="2"]': 0
+  '#xs div[class~="y"]': 1
+  '#xs div[class~="a"]': 0
+  '#xs img[src^="bl"]': 2
+  '#xs img[src^="ah"]': 0
+  '#xs img[src$="ah"]': 1
+  '#xs img[src$="bl"]': 0
+  '#xs img[src*="la"]': 1
+  '#xs img[src*="gb"]': 0
+  '#xs a[lang|="en"]': 1
+  '#xs > a[lang|="pt"]': 0
+
+
+test-set(ensure, query) =
+  for pattern, len of selectors
+    ensure (query pattern) .property \length .same len
+
+test-single(ensure, query) =
+  for pattern, len of selectors
+    assertion = ensure (query pattern)
+    if not len then assertion = assertion.not!
+    assertion.ok!
+
+
+Describe '{} query <Native>' ->
+  {query, query-one}  = (require \moros/src/query)!
+
+  Describe 'λ query' ->
+    It 'Should return a set of elements.' ->
+      ensure (query \a) .type \Array
+      ensure (query \html) .type \Array
+      ensure (query \*) .type \Array
+
+    It 'Should select elements using CSS selectors.' ->
+      test-set ensure, query
+
+    It 'Given a context, should return only elements descending from that context.' ->
+      ensure (query \div, document.get-element-by-id \xs) .property \length .same 1
+
+  Describe 'λ query-one' ->
+    It 'Should return a single element.' ->
+      ensure (query-one \a) .type \HTMLAnchorElement
+      ensure (query-one \html) .type \HTMLHtmlElement
+      ensure (query-one \*) .type \HTMLHtmlElement
+
+    It 'Should select elements using CSS selectors.' ->
+      test-single ensure, query-one
+
+    It 'Given a context, should return only elements descending from that context.' ->
+      ensure (query-one \a, document.get-element-by-id \xs).get-attribute \lang .same \en-gb

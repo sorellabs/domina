@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Mocha</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="mocha.css" />
+    <style>#xs{ display: none }</style>
+  </head>
+  <body>
+    <!-- Test fixtures -->
+    <div id="xs">--<a href="foo"
+    lang="en-gb">1</a><img src="bleh"><img src="blah"
+    data-boo="1"><div class="x y z"><a href="bar" lang="pt-br">2</a></div>--</div>
+        
+    
+    <!-- Test setup -->
+    <div id="mocha"></div>
+    <script src="mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="es5-shim.js"></script>
+    <script src="sinon.js"></script>
+    <script src="suite.dbg.js"></script>
+    <script>
+      mocha.run();
+    </script>
+  </body>
+</html>
