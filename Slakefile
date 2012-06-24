@@ -43,4 +43,4 @@ task \package 'Packages Moros in a nice .tar.gz package.' ->
 
 task \test 'Generates test artifacts for Mocha.' ->
   defer _.display-errors
-  "suite" |> _.tasks.bundle \test/browser {+bare, +prelude} [\test/browser/suite.ls]
+  "suite" |> _.tasks.bundle \test/build {+bare, +prelude} [\test/suite.ls]
