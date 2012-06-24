@@ -24,7 +24,8 @@ task \build 'Builds JavaScript files out of the LiveScript ones.' ->
 
 task \build:bundle 'Generates browserify bundles for Moros.' ->
   defer _.display-errors
-  "moros" |> _.tasks.bundle \build, {+bare, -prelude, require: [\moros]}, []
+  "moros"      |> _.tasks.bundle \build, {+bare, require: [\moros]}, []
+  "browserify" |> _.tasks.bundle \build, {+bare, +prelude}, []
 
 
 task \build:all 'Runs all build tasks.' ->
