@@ -83,7 +83,7 @@ module.exports = (event) ->
   | otherwise               => ie-listen
 
 
-  #### Function remove
+  #### Function deafen
   # Unregisters a previously registered event handler for a set of DOOM
   # nodes.
   #
@@ -91,8 +91,8 @@ module.exports = (event) ->
   # need to get your hands dirty with the DOOM API itself if you need to
   # do that.
   #
-  # remove! :: EventType -> (Event -> IO Bool) -> [Node] -> ()
-  remove = switch
+  # deafen! :: EventType -> (Event -> IO Bool) -> [Node] -> ()
+  deafen = switch
   | has-p \removeEventListener => w3c-remove
   | otherwise                  => ie-remove
 
@@ -104,4 +104,4 @@ module.exports = (event) ->
     event
 
   else        # Uses the standard DOM APIs
-    { listen, remove }
+    { listen, deafen }
