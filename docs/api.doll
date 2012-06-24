@@ -37,8 +37,8 @@ Module utils
 
 
 Module query SelectorEngine
-  query     :: Selector -> [Node]
-  query-one :: Selector -> Node
+  query     :: Selector, Element? -> [Node]
+  query-one :: Selector, Element? -> Node
 
 
 Module event EventManager
