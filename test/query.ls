@@ -1,5 +1,4 @@
 ensure = require \noire .ensure
-window <<< {require}
 
 selectors =
   '#xs *': 5
@@ -30,7 +29,7 @@ test-single(ensure, query) =
     assertion.ok!
 
 
-Describe '{} query <Native>' ->
+Describe '{} query ‹Native›' ->
   {query, query-one}  = (require \moros/src/query)!
 
   Describe 'λ query' ->
