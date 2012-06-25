@@ -105,7 +105,7 @@ $ less LICENCE.txt
 ```
 
 
-[download the latest release]: https://github.com/downloads/killdream/moros/moros-0.3.0.tar.gz
+[download the latest release]: https://github.com/downloads/killdream/moros/moros-0.3.1.tar.gz
 
 [es5-shim]: https://github.com/kriskowal/es5-shim/
 [Sizzle]: http://sizzlejs.com/
