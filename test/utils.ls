@@ -5,7 +5,7 @@ Describe '{} utils' ->
   spy = ys = null
   beforeEach ->
     spy := sinon.spy!
-    ys  := document.get-element-by-id \xs .child-nodes
+    ys  := moros.children moros.get \xs
 
   Describe 'λ each' ->
     It 'Should curry the arguments.' ->
@@ -39,4 +39,4 @@ Describe '{} utils' ->
 
     It 'Should return an array with each item mapped by the functor.' ->
       ensure (map (* 2), [1 2 3]) .equals [2 4 6]
-      ensure (map ((x) -> x.node-name), ys) .equals <[ #text A IMG IMG DIV #text ]>
+      ensure (map ((x) -> x.node-name), ys) .equals <[ A IMG IMG DIV ]>

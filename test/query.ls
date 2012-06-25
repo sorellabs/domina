@@ -32,7 +32,7 @@ test-single(ensure, query) =
 Describe '{} query ‹Native›' ->
   {query, query-one}  = (require \../src/query)!
 
-  before-each moros-reset-dom
+  before-each moros.reset-dom
 
   Describe 'λ query' ->
     It 'Should return a set of elements.' ->

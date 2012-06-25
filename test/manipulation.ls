@@ -2,7 +2,7 @@ Describe '{} manipulation' ->
   ensure = require \noire .ensure
   _      = require \../src/manipulation
 
-  before-each moros-reset-dom
+  before-each moros.reset-dom
   get = (id)   -> document.get-element-by-id id
   tag = (name) -> document.create-element name
 
