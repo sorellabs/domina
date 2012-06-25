@@ -72,7 +72,7 @@ Module reflection
 
 
 Module presentation
-  style               :: String -> [Node] -> [Maybe String]
+  style               :: String -> [Node] -> [String]
   computed-style      :: String -> [Node] -> [Maybe String]
   set-style           :: String -> String -> xs:[Node*] -> xs
   classes             :: [Node] -> [[String]]

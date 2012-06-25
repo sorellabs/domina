@@ -49,7 +49,7 @@ get-computed-style = let e = document.createElement \div
                      | otherwise           => (it, state) ->
                                                 it.owner-document
                                                   .default-view
-                                                  .get-computed-style e, state
+                                                  .get-computed-style it, state
 
 
 #### Function make-class-re
@@ -57,15 +57,15 @@ get-computed-style = let e = document.createElement \div
 #
 # make-class-re :: String -> RegExp
 make-class-re = (name) ->
+  escape = (re) -> do
+                   re.trim!
+                     .replace /([^\w\s])/g, '\\$1'
+                     .replace /\s+/,        '|'
+
   new RegExp "\\s*\\b
               (#{escape normalise-classes name})
               \\b\\s*"
             , \gi
-
-  function escape(re)
-    re.trim!
-      .replace /([^\w\s])/g, '\\$1'
-      .replace /\s+/,        '|'
 
 
 #### Function normalise-classes
@@ -86,8 +86,8 @@ normalise-classes = ->
 # If you need to grab styles that come from stylesheets or are otherwise
 # computed by the browser, use :fun:`.computed-style` instead.
 #
-# style :: String -> [Node] -> [Maybe String]
-style = (name) -> map ->
+# style :: String -> [Node] -> [String]
+style(name, xs) = xs |> map ->
   it.style[name]
 
 
@@ -96,7 +96,7 @@ style = (name) -> map ->
 # browser.
 #
 # computed-style :: String -> [Node] -> [Maybe String]
-computed-style = (name) -> map ->
+computed-style(name, xs) = xs |> map ->
   (get-computed-style it)[name]
 
 
@@ -104,7 +104,7 @@ computed-style = (name) -> map ->
 # Gives a style's property a new value on each node.
 #
 # set-style! :: String -> String -> xs:[Node*] -> xs
-set-style(name, value) = each ->
+set-style(name, value, xs) = xs |> each ->
   it.style[name] = value
 
 
@@ -123,7 +123,7 @@ classes = map ->
 # white-space, or as an array of strings.
 #
 # add-class! :: Classes -> xs:[Node*] -> xs
-add-class = (name) -> each ->
+add-class(name, xs) = xs |> each ->
   remove-class name, it
   it.class-name += " #{normalise-classes name}"
 
@@ -135,9 +135,9 @@ add-class = (name) -> each ->
 # or as an array of strings.
 #
 # remove-class! :: Classes -> xs:[Node*] -> xs
-remove-class = (name) ->
+remove-class(name, xs) =
   re = make-class-re name
-  each -> it.class-name = it.class-name.replace re, ''
+  xs |> each -> it.class-name = it.class-name.replace re, ''
 
 
 #### Function has-class-p
@@ -147,9 +147,9 @@ remove-class = (name) ->
 # or as an array of strings.
 #
 # has-class-p :: Classes -> [Node] -> [Bool]
-has-class-p = (name) ->
+has-class-p(name, xs) =
   re = make-class-re name
-  map -> it.class-name.test re
+  xs |> map -> re.test it.class-name
 
 
 #### Function toggle-class
@@ -159,17 +159,18 @@ has-class-p = (name) ->
 # exist will be added.
 #
 # toggle-class! :: String -> xs:[Node*] -> xs
-toggle-class = (name) ->
+toggle-class(name, xs) =
   has-p = has-class-p name
-  each ->
-    | has-p it  => remove-class name, it
-    | otherwise => add-class name, it
+  debugger
+  xs |> each ->
+         | has-p it .0  => remove-class name, it
+         | otherwise    => add-class name, it
 
 #### Function specify-class-state
 # Adds or removes a bunch of classes on the given nodes.
 #
 # specify-class-state! :: String -> Bool -> xs:[Node*] -> xs
-specify-class-state(name, should-add-p) = each ->
+specify-class-state(name, should-add-p, xs) = xs |> each ->
   | should-add-p  => add-class name, it
   | otherwise     => remove-class name, it
 
