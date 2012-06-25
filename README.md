@@ -9,7 +9,7 @@ and of course, be *fast* when working with `NodeLists`.
 ### Example
 
 ```coffee
-moros = require \moros (Sizzle, listen: Bean.add, remove: Bean.remove)
+moros = require \moros (Sizzle, listen: Bean.add, deafen: Bean.remove)
 
 # Everything is curried, so it's easy to create helper functions!
 ignore-click = moros.listen \click (ev) -> ev.prevent-default!
