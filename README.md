@@ -87,6 +87,13 @@ $ slake build:all                                 # Run the build tasks
 ```
 
 
+### Tests
+
+To run tests, you'll need to build the test specs. You can use `slake test` for
+an one-shot test building, or `slake test:continuous` for continuous
+rebuilding, which is nicer for hacking on Moros' source itself.
+
+
 ### Licence
 
 Moros is licensed under the delicious and permissive [MIT][] licence. You can
