@@ -1,6 +1,6 @@
 Describe '{} reflection' ->
   ensure = require \noire .ensure
-  _      = require \moros/src/reflection
+  _      = require \../src/reflection
 
   {get, children} = moros
   before-each moros.reset-dom
