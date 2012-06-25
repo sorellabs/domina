@@ -21,7 +21,7 @@ show = (x) ->
 
 
 task \clean 'Removes all build artifacts.' ->
-  each fs.remove, <[ lib build dist ]>
+  each fs.remove, <[ lib build dist test/build ]>
   defer _.display-errors
 
 
