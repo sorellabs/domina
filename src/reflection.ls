@@ -52,7 +52,7 @@ attributes = map ->
 # Returns the value of the given attribute for each given node.
 #
 # attribute :: String -> [Node] -> [Maybe String]
-attribute = (name) -> map ->
+attribute(name, xs) = xs |> map ->
   it.get-attribute name
 
 
@@ -63,7 +63,7 @@ attribute = (name) -> map ->
 # attribute from the Node.
 #
 # set-attribute! :: String -> Maybe String -> xs:[Node*] -> xs
-set-attribute(name, value) = each ->
+set-attribute(name, value, xs) = xs |> each ->
   | value === null => it.remove-attribute name
   | otherwise      => it.set-attribute name, value
 
@@ -83,7 +83,7 @@ text = map ->
 # The sub-tree will contain only a single Text node.
 #
 # set-text! :: String -> xs:[Node*] -> xs
-set-text = (value) -> each ->
+set-text(value, xs) = xs |> each ->
   it[TEXT] = value
 
 
@@ -106,7 +106,7 @@ html = map ->
 # quirks. Make sure you're aware of them.
 #
 # set-html! :: String -> xs:[Node*] -> xs
-set-html = (value) -> each ->
+set-html(value, xs) = xs |> each ->
   it.innerHTML = value
 
 
