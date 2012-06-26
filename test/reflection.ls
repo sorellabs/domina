@@ -9,8 +9,7 @@ Describe '{} reflection' ->
     It 'should return a list of Attributes for every Element.' ->
       ensure (_.attributes children (get \xs)) .property \length .same 4
       ensure (_.attributes (get \xs) .0) .type \Array
-      ensure (_.attributes (get \xs) .0.0.name) .same \id
-      ensure (_.attributes (get \xs) .0.0.value) .same \xs
+      ensure (_.attributes (get \xs) .0.some -> it.name is \id && it.value is \xs) .ok!
 
   Describe 'λ attribute' ->
     It 'should return the value of the given attribute for each node.' ->
