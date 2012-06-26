@@ -14,7 +14,7 @@ Describe '{} reflection' ->
   Describe 'λ attribute' ->
     It 'should return the value of the given attribute for each node.' ->
       ensure (_.attribute \id (get \xs)) .equals [\xs]
-      ensure (_.attribute \alt children (get \xs)) .equals [void \bleh \blah void]
+      ensure (_.attribute \alt children (get \xs)).filter Boolean .equals [\bleh \blah]
 
   Describe 'λ set-attribute' ->
     It 'given a value, should set the value of the attribute to that.' ->
@@ -26,7 +26,7 @@ Describe '{} reflection' ->
       xs = children (get \xs)
       _.set-attribute \data-lol \lol xs
       _.set-attribute \data-lol void xs
-      for x in xs => ensure (x.has-attribute \data-lol) .not!ok!
+      for x in xs => ensure (x.get-attribute \data-lol) .not!ok!
 
   Describe 'λ text' ->
     It 'should return the textual representation of a node\'s contents.' ->
