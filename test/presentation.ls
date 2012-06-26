@@ -8,20 +8,20 @@ Describe '{} presentation' ->
   Describe 'λ style' ->
     It 'should retrieve the style property set in the node.' ->
       x = get \xs
-      ensure (_.style \text-align x) .equals [\left]
+      ensure (_.style \textAlign x) .equals [\left]
       ensure (_.style \display x) .equals ['']
 
   Describe 'λ computed-style' ->
     It 'should retrieve the computed value for a property in the node.' ->
       x = get \xs
       ensure (_.computed-style \display x) .equals [\none]
-      ensure (_.computed-style \text-align x) .equals [\left]
+      ensure (_.computed-style \textAlign x) .equals [\left]
 
   Describe 'λ set-style' ->
     It 'should define the style property directly in the node.' ->
       x = get \xs
-      _.set-style \text-align \right x
-      ensure x.style.text-align .same \right
+      _.set-style \textAlign \right x
+      ensure x.style.textAlign .same \right
 
   Describe 'λ classes' ->
     It 'should return the list of classes for each node.' ->
