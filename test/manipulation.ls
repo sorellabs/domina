@@ -41,7 +41,7 @@ Describe '{} manipulation' ->
     It 'should remove the nodes from the DOM tree.' ->
       xs = get (\xs)
       _.detach (get \xs)
-      ensure xs.parent-node .same null
+      ensure ((not xs.parent-node) or (not xs.parent-node.tag-name)) .ok!
 
   Describe 'λ replace' ->
     It 'should replace the related target by the given nodes.' ->
