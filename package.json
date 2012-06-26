@@ -2,7 +2,7 @@
   "author": "Quildreen Motta <quildreen@gmail.com> (http://killdream.github.com)",
   "name": "moros",
   "description": "DOM handling library",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "repository": {
     "url": "git://github.com/killdream/moros.git"
   },
