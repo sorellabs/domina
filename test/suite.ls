@@ -12,7 +12,7 @@ window.moros =
     document.document-element.append-child actual
 
   elements: (xs) ->
-    [].filter.call xs, -> it instanceof Element
+    [].filter.call xs, -> \tagName of it
 
   get: (id) ->
     document.get-element-by-id id
