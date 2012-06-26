@@ -8,7 +8,7 @@ event(kind, name, element, options = {+bubbles, +cancelable}) =
 
   else
     ev = document.create-event-object! <<< options
-    element.fire-event "on#event" ev
+    element.fire-event "on#name" ev
 
 
 mouse = event \MouseEvents
