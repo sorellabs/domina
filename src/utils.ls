@@ -80,7 +80,7 @@ as-sequence = (x) ->
 # Casts a Sequence into an Array.
 #
 # to-array :: [a] -> Array a
-to-array = Function.call.bind [].slice
+to-array = (xs) -> [x for x in xs]
 
 
 #### Function each
