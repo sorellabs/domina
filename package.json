@@ -1,15 +1,41 @@
 {
-  "author": "Quildreen Motta <quildreen@gmail.com> (http://killdream.github.com)",
   "name": "moros",
-  "description": "DOM handling library",
+  "description": "Functional DOM processing abstractions through generic functions.",
   "version": "0.3.2",
+  "keywords": [
+    "DOM",
+    "browser",
+    "events"
+  ],
+  "author": {
+    "name": "Quildreen Motta",
+    "email": "quildreen@gmail.com"
+  },
+  "bugs": {
+    "name": "https://github.com/killdream/moros/issues"
+  },
+  "licences": [{
+    "type": "MIT",
+    "url": "https://raw.github.com/killdream/moros/master/LICENCE.txt"
+  }],
   "repository": {
     "url": "git://github.com/killdream/moros.git"
   },
-  "main": "./lib/index.js",
   "engines": {
-    "node": "~0.6.7"
+    "node": ">=0.4.x"
   },
+  "directories": {
+    "lib": "./lib"
+  },
+  "files": [
+    "src",
+    "test",
+    "package.json",
+    "README.md",
+    "LICENCE.txt",
+    "Slakefile"
+  ],
+  "main": "./lib/index.js",
   "dependencies": {},
   "devDependencies": { "mocha": "*"
                      , "LiveScript": "*"
@@ -20,5 +46,8 @@
                      , "buster-format": "*"
                      , "node-watch": "*"
                      },
-  "optionalDependencies": {}
+  "optionalDependencies": {},
+  "scripts": {
+    "install": "slake build"
+  }
 }
