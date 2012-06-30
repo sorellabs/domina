@@ -1,6 +1,6 @@
 Describe '{} presentation' ->
   ensure = require \noire .ensure
-  _      = require \../moros/src/presentation
+  _      = require \../src/presentation
 
   {get, children} = moros
   before-each moros.reset-dom
