@@ -28,32 +28,40 @@ test-single(ensure, query) =
     if not len then assertion = assertion.not!
     assertion.ok!
 
+test-selector-engine(name, engine) =
+  Describe "{} query ‹#{name}›" ->
+    {query, query-one}  = engine
 
-Describe '{} query ‹Native›' ->
-  {query, query-one}  = (require \../src/query)!
+    before-each moros.reset-dom
 
-  before-each moros.reset-dom
+    Describe 'λ query' ->
+      It 'Should return a set of elements.' ->
+        ensure (query \a) .type \Array
+        ensure (query \html) .type \Array
+        ensure (query \*) .type \Array
 
-  Describe 'λ query' ->
-    It 'Should return a set of elements.' ->
-      ensure (query \a) .type \Array
-      ensure (query \html) .type \Array
-      ensure (query \*) .type \Array
+      It 'Should select elements using CSS selectors.' ->
+        test-set ensure, query
 
-    It 'Should select elements using CSS selectors.' ->
-      test-set ensure, query
+      It 'Given a context, should return only elements descending from that context.' ->
+        ensure (query \div, document.get-element-by-id \xs) .property \length .same 1
 
-    It 'Given a context, should return only elements descending from that context.' ->
-      ensure (query \div, document.get-element-by-id \xs) .property \length .same 1
+    Describe 'λ query-one' ->
+      It 'Should return a single element.' ->
+        ensure (query-one \a) .type \HTMLAnchorElement
+        ensure (query-one \html) .type \HTMLHtmlElement
+        ensure (query-one \*) .type \HTMLHtmlElement
 
-  Describe 'λ query-one' ->
-    It 'Should return a single element.' ->
-      ensure (query-one \a) .type \HTMLAnchorElement
-      ensure (query-one \html) .type \HTMLHtmlElement
-      ensure (query-one \*) .type \HTMLHtmlElement
+      It 'Should select elements using CSS selectors.' ->
+        test-single ensure, query-one
 
-    It 'Should select elements using CSS selectors.' ->
-      test-single ensure, query-one
+      It 'Given a context, should return only elements descending from that context.' ->
+        ensure (query-one \a, document.get-element-by-id \xs).get-attribute \lang .same \en-gb
 
-    It 'Given a context, should return only elements descending from that context.' ->
-      ensure (query-one \a, document.get-element-by-id \xs).get-attribute \lang .same \en-gb
+### Engine tests
+query = require \../src/query
+test-selector-engine \Native query!
+
+if Sizzle? => test-selector-engine \Sizzle    query Sizzle
+if NW?     => test-selector-engine \NWMatcher query NW.match
+if qwery?  => test-selector-engine \Qwery     query qwery

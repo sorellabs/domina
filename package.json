@@ -12,12 +12,14 @@
     "email": "quildreen@gmail.com"
   },
   "bugs": {
-    "name": "https://github.com/killdream/moros/issues"
+    "url": "https://github.com/killdream/moros/issues"
   },
-  "licences": [{
-    "type": "MIT",
-    "url": "https://raw.github.com/killdream/moros/master/LICENCE.txt"
-  }],
+  "licences": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/killdream/moros/master/LICENCE.txt"
+    }
+  ],
   "repository": {
     "url": "git://github.com/killdream/moros.git"
   },
@@ -36,16 +38,18 @@
     "Slakefile"
   ],
   "main": "./lib/index.js",
-  "dependencies": {},
-  "devDependencies": { "mocha": "*"
-                     , "LiveScript": "*"
-                     , "browserify": "*"
-                     , "noire": "*"
-                     , "sinon": "*"
-                     , "slake-build-utils": "*"
-                     , "buster-format": "*"
-                     , "node-watch": "*"
-                     },
+  "dependencies": { },
+  "devDependencies": {
+    "mocha": "*",
+    "LiveScript": "*",
+    "browserify": "*",
+    "noire": "*",
+    "sinon": "*",
+    "slake-build-utils": "*",
+    "buster-format": "*",
+    "node-watch": "*",
+    "http-get": "*"
+  },
   "optionalDependencies": {},
   "scripts": {
     "install": "slake build"
