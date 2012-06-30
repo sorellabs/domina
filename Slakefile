@@ -1,4 +1,3 @@
-glob         = require \glob .sync
 watch        = require \nodewatch
 http         = require \http-get
 sequentially = require \cassie/src/sequencing
