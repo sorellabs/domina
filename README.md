@@ -9,7 +9,7 @@ and of course, be *fast* when working with `NodeLists`.
 ### Example
 
 ```coffee
-moros = require \moros (Sizzle, listen: Bean.add, deafen: Bean.remove)
+moros = require \moros (Sizzle, require \moros/bridge/bean)
 
 # Everything is curried, so it's easy to create helper functions!
 ignore-click = moros.listen \click (ev) -> ev.prevent-default!
@@ -92,6 +92,10 @@ $ slake build:all                                 # Run the build tasks
 To run tests, you'll need to build the test specs. You can use `slake test` for
 an one-shot test building, or `slake test:continuous` for continuous
 rebuilding, which is nicer for hacking on Moros' source itself.
+
+For testing integration with vendor libraries, you'll need to run `slake
+deps:vendor` to download the vendor libraries first, then build the test
+files.
 
 
 ### Licence
