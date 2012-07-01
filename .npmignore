@@ -1,7 +1,6 @@
 test/build
 build
 ignore
-lib
 vendor
 node_modules
 npm-debug.log
