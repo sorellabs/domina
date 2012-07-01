@@ -48,7 +48,6 @@ If you're using [Browserify][] — you really should! — to manage your
 dependencies, just grab it from [NPM][]:
 
 ```bash
-$ npm install -g LiveScript
 $ npm install moros
 ```
 
