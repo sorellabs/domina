@@ -1,4 +1,4 @@
-watch        = require \nodewatch
+watch        = require \node-watch
 http         = require \http-get
 sequentially = require \cassie/src/sequencing
 Promise      = require \cassie .Promise
