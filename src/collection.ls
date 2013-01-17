@@ -127,6 +127,20 @@ concat = (xs...) ->
   reduce append, [], xs
 
 
+##### Function map-concat
+#
+# Maps over a collection concatenating the resulting collections.
+#
+# map-concat :: (a -> [b]) -> Coll a -> [b]
+map-concat = (f, xs) -->
+  flat-transform = (ys, a) ->
+    ys.push.apply ys, (f a)
+    ys
+
+  reduce flat-transform, [], xs
+
+
+
 
 #### -- Exports --------------------------------------------------------
 module.exports = {
@@ -138,4 +152,5 @@ module.exports = {
   each
   reduce
   concat
+  map-concat
 }
