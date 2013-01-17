@@ -121,7 +121,9 @@ reduce = (f, initial, xs) -->
 #
 # concat :: Coll a... -> Coll a
 concat = (xs...) ->
-  append = (ys, a) -> ys.push.apply ys, a
+  append = (ys, a) ->
+    ys.push.apply ys, a
+    ys
   reduce append, [], xs
 
 
