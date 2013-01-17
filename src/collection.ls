@@ -120,7 +120,7 @@ reduce = (f, initial, xs) -->
 # Concatenates several collections together.
 #
 # concat :: Coll a... -> Coll a
-concat = (xs...) ->
+concat = (...xs) ->
   append = (ys, a) ->
     ys.push.apply ys, a
     ys
