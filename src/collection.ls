@@ -1,6 +1,9 @@
-### collection.ls --- Generic collection handling for DOM
+## Module collection
 #
-# Copyright (c) 2013 The Orphoundation
+# Generic collection handling for DOM.
+#
+#
+# Copyright (c) 2013 Quildreen "Sorella" Motta <quildreen@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -21,25 +24,24 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-### Module moros.collection
 
 
-#### -- Helpers --------------------------------------------------------
+### -- Helpers ---------------------------------------------------------
 
-##### Function to-array
+#### λ to-array
 #
 # Converts a Collection to an Array. Only exists to guard on
 # sequence-like host objects in engines like JScript.
 #
-# to-array :: Coll a -> Array a
+# :: Coll a -> Array a
 to-array = (xs) -> [x for x in xs]
 
 
-##### Function collection-p
+#### λ collection-p
 #
 # Checks if something is a Collection.
 #
-# collection-p :: a -> Bool
+# :: a -> Bool
 collection-p = (a) ->
   a && (not 'nodeType' of a) \
     && a.length >= 0
@@ -47,79 +49,85 @@ collection-p = (a) ->
 
 
 
-#### -- Core implementation --------------------------------------------
+### -- Accessing elements ----------------------------------------------
 
-##### Function head
+#### λ head
 #
 # Returns the first item of a collection.
 #
-# head :: Coll a -> Maybe a
+# :: Coll a -> Maybe a
 head = (xs) -> xs.0
 
 
-##### Function tail
+#### λ tail
 #
 # Returns a new collection without the first item.
 #
-# tail :: Coll a -> Coll a
+# :: Coll a -> Coll a
 tail = (xs) -> [x for x, i in xs when i > 0]
 
 
-##### Function last
+#### λ last
 #
 # Returns the last item of a collection.
 #
-# last :: Coll a -> Maybe a
+# :: Coll a -> Maybe a
 last = (xs) -> xs[*-1]
 
 
-##### Function as-collection
+
+### -- Conversions -----------------------------------------------------
+
+#### λ as-collection
 #
 # Turns anything into a collection.
 #
-# as-collection :: a -> Coll a
-# as-collection :: Coll a -> Coll a
+# :: a -> Coll a
+# :: Coll a -> Coll a
 as-collection = (x) ->
   | collection-p x => x
   | otherwise      => [x]
 
 
-##### Function each
+
+### -- Iterators and folds ---------------------------------------------
+
+#### λ each
 #
 # Applies a function to each item in the Collection.
 #
-# each :: (a -> IO ()) -> xs:Coll a* -> xs
+# :: (a -> IO ()) -> xs:Coll a* -> xs
 each = (f, xs) -->
   ys = as-collection xs
   for x, i in ys => f x
   ys
 
 
-##### Function map
+#### λ map
 #
 # Transforms a Collection by applying the given function to each item.
 #
-# map :: (a -> b) -> Coll a -> Coll b
+# :: (a -> b) -> Coll a -> Coll b
 map = (f, xs) --> [(f x) for x in (as-collection xs)]
 
 
-##### Function reduce
+#### λ reduce
 #
 # Computes a value by incrementally reducing a collection with a binary
 # function.
 #
-# reduce :: (b, a -> b) -> b -> Coll a -> b
+# :: (b, a -> b) -> b -> Coll a -> b
 reduce = (f, initial, xs) -->
   result = initial
   for x in xs => result = (f result, x)
   result
 
 
-##### Function concat
+#### λ concat
 #
 # Concatenates several collections together.
 #
-# concat :: Coll a... -> Coll a
+# :: Coll a... -> Coll a
 concat = (...xs) ->
   append = (ys, a) ->
     ys.push.apply ys, a
@@ -128,11 +136,11 @@ concat = (...xs) ->
   reduce append, [], xs
 
 
-##### Function map-concat
+#### λ map-concat
 #
 # Maps over a collection concatenating the resulting collections.
 #
-# map-concat :: (a -> [b]) -> Coll a -> [b]
+# :: (a -> [b]) -> Coll a -> [b]
 map-concat = (f, xs) -->
   flat-transform = (ys, a) ->
     ys.push.apply ys, (f a)
@@ -143,7 +151,7 @@ map-concat = (f, xs) -->
 
 
 
-#### -- Exports --------------------------------------------------------
+### -- Exports ---------------------------------------------------------
 module.exports = {
   head
   tail
