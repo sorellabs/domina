@@ -1,48 +1,45 @@
-/** presentation.ls --- Core visual presentation handling
- *
- * Version: -:package.version:-
- *
- * Copyright (c) 2012 Quildreen Motta
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation files
- * (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge,
- * publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
- * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+## Module presentation #################################################
+#
+# Core visual presentation handling.
+#
+# 
+# Copyright (c) 2013 Quildreen "Sorella" Motta <quildreen@gmail.com>
+# 
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+### -- Dependencies ----------------------------------------------------
+{map, each} = require './collection'
 
 
 
-## Module moros.presentation ###########################################
-
-### == Dependencies ====================================================
-{map, each} = require \./utils
-
-
-
-### == Aliases =========================================================
+### -- Aliases ---------------------------------------------------------
 array-p = Array.is-array
 
 
-### == Helpers =========================================================
+### -- Helpers ---------------------------------------------------------
 
-#### Function get-computed-style
+#### λ get-computed-style
 # Returns the computed style of a given Element.
 #
-# get-computed-style :: Element -> { String -> String }
+# :: Element -> { String -> String }
 get-computed-style = let e = document.createElement \div
                      switch
                      | \currentStyle of e  => -> it.current-style
@@ -52,10 +49,10 @@ get-computed-style = let e = document.createElement \div
                                                   .get-computed-style it, state
 
 
-#### Function make-class-re
+#### λ make-class-re
 # Creates a regular expression that matches space-separated classes.
 #
-# make-class-re :: String -> RegExp
+# :: String -> RegExp
 make-class-re = (name) ->
   escape = (re) -> do
                    re.trim!
@@ -68,114 +65,113 @@ make-class-re = (name) ->
             , \gi
 
 
-#### Function normalise-classes
+#### λ normalise-classes
 # Normalises a Classes interface.
 #
-# normalise-classes :: Classes -> String
+# :: Classes -> String
 normalise-classes = ->
   | array-p it  => it.join ' '
   | otherwise   => String it
 
 
 
-### == Core implementation =============================================
+### -- Core implementation ---------------------------------------------
 
-#### Function style
+#### λ style
 # Returns the value of a given style property set directly on the Node.
 #
 # If you need to grab styles that come from stylesheets or are otherwise
 # computed by the browser, use :fun:`.computed-style` instead.
 #
-# style :: String -> [Node] -> [String]
-style(name, xs) = xs |> map ->
+# :: String -> [Node] -> [String]
+style = (name, xs) --> xs |> map ->
   it.style[name]
 
 
-#### Function computed-style
+#### λ computed-style
 # Returns the value of a given style property as computed by the
 # browser.
 #
-# computed-style :: String -> [Node] -> [Maybe String]
-computed-style(name, xs) = xs |> map ->
+# :: String -> [Node] -> [Maybe String]
+computed-style = (name, xs) --> xs |> map ->
   (get-computed-style it)[name]
 
 
-#### Function set-style
+#### λ set-style
 # Gives a style's property a new value on each node.
 #
-# set-style! :: String -> String -> xs:[Node*] -> xs
-set-style(name, value, xs) = xs |> each ->
+# :: String -> String -> xs:[Node*] -> xs
+set-style = (name, value, xs) --> xs |> each ->
   it.style[name] = value
 
 
-#### Function classes
+#### λ classes
 # Returns the list of classes for each Node.
 #
-# classes :: [Node] -> [[String]]
+# :: [Node] -> [[String]]
 classes = map ->
   it.class-name.trim!.split /\s+/
 
 
-#### Function add-class
+#### λ add-class
 # Adds new classes on each node.
 #
 # Multiple classes can be given either as words delimited by
 # white-space, or as an array of strings.
 #
-# add-class! :: Classes -> xs:[Node*] -> xs
-add-class(name, xs) = xs |> each ->
+# :: Classes -> xs:[Node*] -> xs
+add-class = (name, xs) --> xs |> each ->
   remove-class name, it
   it.class-name += " #{normalise-classes name}"
 
 
-#### Function remove-class
+#### λ remove-class
 # Removes a set of classes from each node.
 #
 # Multiple classes can be given either as words delimited by white-space
 # or as an array of strings.
 #
-# remove-class! :: Classes -> xs:[Node*] -> xs
-remove-class(name, xs) =
+# :: Classes -> xs:[Node*] -> xs
+remove-class = (name, xs) -->
   re = make-class-re name
   xs |> each -> it.class-name = it.class-name.replace re, ''
 
 
-#### Function has-class-p
+#### λ has-class-p
 # Does each node has any of the given set of classes?
 #
 # Multiple classes can be given either as words separated by white-space
 # or as an array of strings.
 #
-# has-class-p :: Classes -> [Node] -> [Bool]
-has-class-p(name, xs) =
+# :: Classes -> [Node] -> [Bool]
+has-class-p = (name, xs) -->
   re = make-class-re name
   xs |> map -> re.test it.class-name
 
 
-#### Function toggle-class
+#### λ toggle-class
 # Toggles a set of classes in the given nodes.
 #
 # That is, classes that are set will be removed, and classes that don't
 # exist will be added.
 #
-# toggle-class! :: String -> xs:[Node*] -> xs
-toggle-class(name, xs) =
+# :: String -> xs:[Node*] -> xs
+toggle-class = (name, xs) -->
   has-p = has-class-p name
-  debugger
   xs |> each ->
          | has-p it .0  => remove-class name, it
          | otherwise    => add-class name, it
 
-#### Function specify-class-state
+#### λ specify-class-state
 # Adds or removes a bunch of classes on the given nodes.
 #
-# specify-class-state! :: String -> Bool -> xs:[Node*] -> xs
-specify-class-state(name, should-add-p, xs) = xs |> each ->
+# :: String -> Bool -> xs:[Node*] -> xs
+specify-class-state = (name, should-add-p, xs) --> xs |> each ->
   | should-add-p  => add-class name, it
   | otherwise     => remove-class name, it
 
 
-### Exports ############################################################
+### -- Exports ---------------------------------------------------------
 module.exports = {
   style
   computed-style
