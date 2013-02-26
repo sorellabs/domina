@@ -26,7 +26,7 @@
 
 
 ### -- Dependencies ----------------------------------------------------
-{map, each, head, tail, as-sequence} = require './utils'
+{map, each, head, tail, as-collection} = require './collection'
 
 
 
@@ -88,7 +88,7 @@ detach = each -> it.parent-node.remove-child it
 #
 # :: Node* -> xs:[Node*] -> xs
 replace = (node, xs) -->
-  xs = as-sequence xs
+  xs = as-collection xs
   node.parent-node.replace-child (head xs), node
   insert-after (head xs), (tail xs)
   xs
