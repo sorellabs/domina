@@ -198,7 +198,7 @@ Module presentation
 -- | Package entrypoint
 Package moros (a:SelectorEngine, b:EventManager)
   {} & collection
-     & traversing
+     & traversing a
      & query a
      & event b
      & manipulation
