@@ -96,6 +96,9 @@ Module event (EventManager)
   -- | Listen to all events of the given type on the nodes
   listen! :: EventType -> (Event -> IO Bool) -> Coll a* -> ()
 
+  -- | Listen to all events that pass the filter, uses nodes as roots.
+  delegate! :: EventType -> EventFilter -> (Event -> IO Bool) -> Cool a* -> ()
+
   -- | Removes the given listeners for every node
   deafen! :: EventType -> (Event -> IO Bool) -> Coll a* -> ()
 
