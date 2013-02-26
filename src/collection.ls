@@ -153,6 +153,7 @@ map-concat = (f, xs) -->
 
 ### -- Exports ---------------------------------------------------------
 module.exports = {
+  to-array
   head
   tail
   last
