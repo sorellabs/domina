@@ -24,11 +24,12 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module.exports = (event) ->
+module.exports = (event, engine) ->
 
   
   ### -- Dependencies --------------------------------------------------
   {each} = require './collection'
+  {matches} = require './query'
 
 
   
@@ -42,6 +43,35 @@ module.exports = (event) ->
   #
   # :: String -> Bool
   has-p = (key) -> key of e
+
+
+  #### λ callable-p
+  # Checks if something can be called.  
+  # 
+  # :: a -> Bool
+  callable-p = (a) -> typeof a is 'function'
+
+
+  #### λ find-target
+  # Finds the actual target of an event, for delegation's sake.
+  #
+  # :: String -> Node -> Node -> Maybe Node
+  find-target = (selector, parent, x) -->
+    while x isnt parent
+      if matches x, selector => return x
+      x = x.parent-node
+
+
+  #### λ as-filter
+  # Constructs a `EventFilter` for delegating events.
+  #
+  # :: String -> (Event -> Maybe Node)
+  # :: (Event -> Maybe Node) -> (Event -> Maybe Node)
+  as-filter = (filter) ->
+    | callable-p filter => filter
+    | otherwise         => (ev) -> find-target selector           \
+                                             , ev.current-target  \
+                                             , ev.target
 
 
   
@@ -81,6 +111,25 @@ module.exports = (event) ->
   | otherwise               => ie-listen
 
 
+  #### λ delegate
+  # Registers a single event handler for a set of DOOM nodes, and
+  # delegates by using a filter.
+  #
+  # Your `EventFilter` can be either a selector string, or a
+  # function. In the latter case, it should return the Node that should
+  # be taken as the target of the action, or `null` if the event
+  # shouldn't be dispatched.
+  #
+  # ## See also:
+  # - `listen`.
+  #
+  # :: EventFilter -> EventType -> (Event, Node -> Bool) -> [Node] -> ()
+  delegate = (filter, event, handler, xs) -->
+    xs |> listen event, (ev) ->
+            element = filter ev
+            if element => handler.call this, ev, element
+
+
   #### λ deafen
   # Unregisters a previously registered event handler for a set of DOOM
   # nodes.
@@ -99,5 +148,5 @@ module.exports = (event) ->
   ### -- Exports -------------------------------------------------------
 
   switch
-  | event     => event
-  | otherwise => { listen, deafen }
+  | event     => event <<< { delegate }
+  | otherwise => { listen, delegate, deafen }
