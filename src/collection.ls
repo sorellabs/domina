@@ -56,7 +56,7 @@ collection-p = (a) ->
 # Returns the first item of a collection.
 #
 # :: Coll a -> Maybe a
-head = (xs) -> xs.0
+head = (xs) -> (as-collection xs).0
 
 
 #### λ tail
@@ -64,7 +64,7 @@ head = (xs) -> xs.0
 # Returns a new collection without the first item.
 #
 # :: Coll a -> Coll a
-tail = (xs) -> [x for x, i in xs when i > 0]
+tail = (xs) -> [x for x, i in (as-collection xs) when i > 0]
 
 
 #### λ last
@@ -72,7 +72,7 @@ tail = (xs) -> [x for x, i in xs when i > 0]
 # Returns the last item of a collection.
 #
 # :: Coll a -> Maybe a
-last = (xs) -> xs[*-1]
+last = (xs) -> (as-collection xs)[*-1]
 
 
 
@@ -119,7 +119,7 @@ map = (f, xs) --> [(f x) for x in (as-collection xs)]
 # :: (b, a -> b) -> b -> Coll a -> b
 reduce = (f, initial, xs) -->
   result = initial
-  for x in xs => result = (f result, x)
+  for x in (as-collection xs) => result = (f result, x)
   result
 
 
@@ -133,7 +133,7 @@ concat = (...xs) ->
     ys.push.apply ys, a
     ys
 
-  reduce append, [], xs
+  reduce append, [], (as-collection xs)
 
 
 #### λ map-concat
@@ -146,7 +146,7 @@ map-concat = (f, xs) -->
     ys.push.apply ys, (f a)
     ys
 
-  reduce flat-transform, [], xs
+  reduce flat-transform, [], (as-collection xs)
 
 
 
