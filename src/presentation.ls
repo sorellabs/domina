@@ -137,14 +137,14 @@ remove-class = (name, xs) -->
   xs |> each -> it.class-name = it.class-name.replace re, ''
 
 
-#### λ has-class-p
+#### λ has-class
 # Does each node has any of the given set of classes?
 #
 # Multiple classes can be given either as words separated by white-space
 # or as an array of strings.
 #
 # :: Classes -> [Node] -> [Bool]
-has-class-p = (name, xs) -->
+has-class = (name, xs) -->
   re = make-class-re name
   xs |> map -> re.test it.class-name
 
@@ -179,7 +179,7 @@ module.exports = {
   classes
   add-class
   remove-class
-  has-class-p
+  has-class
   toggle-class
   specify-class-state
 }

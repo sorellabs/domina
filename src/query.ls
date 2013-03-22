@@ -2,9 +2,9 @@
 #
 # Selects a `Collection` of `Nodes` using CSS selectors.
 #
-# 
+#
 # Copyright (c) 2013 Quildreen "Sorella" Motta <quildreen@gmail.com>
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
 # (the "Software"), to deal in the Software without restriction,
@@ -12,10 +12,10 @@
 # publish, distribute, sublicense, and/or sell copies of the Software,
 # and to permit persons to whom the Software is furnished to do so,
 # subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -38,7 +38,7 @@ module.exports = (engine) ->
   # Test which implementation of ``matchesSelector`` is available, so we
   # can just keep using it everytime without paying for the additional
   # checks :3
-  # 
+  #
   # :: @Element => Selector -> Coll Element
   internal-matches-p = let el = document.create-element 'div'
                        return el.matches-selector        \
@@ -64,12 +64,12 @@ module.exports = (engine) ->
     to-array (context.query-selector-all selector)
 
 
-  #### λ matches-p
+  #### λ matches
   #
   # Checks if an Element matches the given CSS selector.
   #
   # :: Selector -> Element -> Bool
-  matches-p = (selector, node) -->
+  matches = (selector, node) -->
     internal-matches-p.call node, selector
 
 
@@ -77,8 +77,8 @@ module.exports = (engine) ->
   ### -- Exports ------------------------------------------------------
 
   if engine     # A custom selector engine was provided
-    query     : engine.query-selector-all or query
-    matches-p : engine.matches-selector or matches-p
+    query   : engine.query-selector-all or query
+    matches : engine.matches-selector or matches-p
 
   else          # Otherwise uses the available DOM selection methods
-    { query, matches-p }
+    { query, matches }
