@@ -53,5 +53,10 @@
   "optionalDependencies": {},
   "scripts": {
     "prepublish": "slake build"
+  },
+  "calliope": {
+    "output": "docs/api",
+    "copyright": "© 2013 Quildreen \"Sorella\" Motta",
+    "packages": [{ "files": ["src/*.ls"] }]
   }
 }
