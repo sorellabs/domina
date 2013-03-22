@@ -61,7 +61,7 @@ module.exports = (engine) ->
   #
   # :: Selector, Element? -> Coll Element
   query = (selector, context = document) ->
-    to-array (context.query-selector-all selector)
+    context.query-selector-all selector
 
 
   #### λ matches
