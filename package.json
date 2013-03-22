@@ -24,9 +24,6 @@
     "type": "git",
     "url": "git://github.com/killdream/moros.git"
   },
-  "engines": {
-    "node": ">=0.4.x"
-  },
   "directories": {
     "lib": "./lib"
   },
