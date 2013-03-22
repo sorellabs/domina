@@ -13,3 +13,5 @@ lib/
 build/
 dist/
 vendor
+docs/api
+.calliope
