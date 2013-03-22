@@ -88,6 +88,18 @@ style = (name, xs) --> xs |> map ->
   it.style[name]
 
 
+#### λ style1
+# Returns the value of a given style property set directly on the first
+# Node.
+#
+# If you need to grab styles that come from stylesheets or are otherwise
+# computed by the browser, use :fun:`.computed-style` instead.
+#
+# :: String -> Coll Node -> String
+style1 = (name, node) --> (head node).style[name]
+
+
+
 #### λ computed-style
 # Returns the value of a given style property as computed by the
 # browser.
@@ -95,6 +107,14 @@ style = (name, xs) --> xs |> map ->
 # :: String -> [Node] -> [Maybe String]
 computed-style = (name, xs) --> xs |> map ->
   (get-computed-style it)[name]
+
+
+#### λ computed-style1
+# Returns the value of the given style property as computed by the
+# browser.
+#
+# :: String -> Coll Node -> Maybe String
+computed-style1 = (name, node) --> (get-computed-style (head node))[name]
 
 
 #### λ set-style
@@ -174,7 +194,9 @@ specify-class-state = (name, should-add-p, xs) --> xs |> each ->
 ### -- Exports ---------------------------------------------------------
 module.exports = {
   style
+  style1
   computed-style
+  computed-style1
   set-style
   classes
   add-class

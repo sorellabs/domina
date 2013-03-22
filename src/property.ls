@@ -54,6 +54,13 @@ attribute = (name, xs) --> xs |> map ->
   it.get-attribute name
 
 
+#### λ attribute1
+# Returns the value of the given attribute for the first node.
+#
+# :: String -> [Node] -> Maybe String
+attribute1 = (name, node) --> (head node).get-attribute name
+
+
 #### λ set-attribute
 # Gives the attribute a new value on each one of the given nodes.
 #
@@ -71,6 +78,13 @@ set-attribute = (name, value, xs) --> xs |> each ->
 #
 # :: [Node] -> [String]
 text = map -> it[TEXT]
+
+
+#### λ text1
+# Returns the plain text representation of the first Node's sub-tree.
+#
+# :: [Node] -> String
+text1 = (node) -> (head node)[TEXT]
 
 
 #### λ set-text
@@ -92,7 +106,17 @@ set-text = (value, xs) --> xs |> each ->
 # are, obviously, not serialised.
 #
 # :: [Node] -> [String]
-html = map -> it.innerHTML
+html = map -> it.inner-HTML
+
+
+#### λ html1
+# Returns the HTML representation of the first Node's sub-tree.
+#
+# ## See also:
+# - `html`
+#
+# :: [Node] -> String
+html1 = (node) -> (head node).inner-HTML
 
 
 #### λ set-html
@@ -103,7 +127,7 @@ html = map -> it.innerHTML
 #
 # :: String -> xs:[Node*] -> xs
 set-html = (value, xs) --> xs |> each ->
-  it.innerHTML = value
+  it.inner-HTML = value
 
 
 
@@ -111,9 +135,12 @@ set-html = (value, xs) --> xs |> each ->
 module.exports = {
   attributes
   attribute
+  attribute1
   set-attribute
   text
+  text1
   set-text
   html
+  html1
   set-html
 }
