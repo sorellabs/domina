@@ -114,23 +114,35 @@ clear = each !->
     it.remove-child it.first-child
 
 
-#### λ clone
-# Creates a clone of the given nodes.
+#### λ shallow-clone
+# Creates a shallow clone of the given nodes.
 #
 # Only attributes and their values will be cloned, **event listeners
-# won't be copied**.
-#
-# Clones can be `deep`, that is, the node and **all its children** are
-# cloned, or shallow, where only the node itself is cloned — remember
-# that plain text are also nodes, so they won't be cloned either.
+# won't be copied**. This will also only clone the Node itself, if also
+# need the node's children, you should use `deep-clone`.
 #
 # The returned clones will be off-DOOM, so you'll need to re-attach them
 # if you want them query-able by a selector engine, or to be rendered on
 # the screen.
 #
-# :: Bool -> [Node] -> [Node]
-clone = (deep, xs) --> xs |> map ->
-  it.clone-node deep
+# :: [Node] -> [Node]
+shallow-clone = (xs) --> xs |> map -> it.clone-node false
+
+
+#### λ clone
+# Creates a deep clone of the given nodes.
+#
+# Only attributes and their values will be cloned, **event listeners
+# won't be copied**. This will clone the node and all its children. If
+# you don't care about the node's children, you can use `clone`, which
+# is faster.
+#
+# The returned clones will be off-DOOM, so you'll need to re-attach them
+# if you want them query-able by a selector engine, or to be rendered on
+# the screen.
+#
+# :: [Node] -> [Node]
+clone = (xs) --> xs |> map -> it.clone-node true
 
 
 
@@ -146,4 +158,5 @@ module.exports = {
   clear
   wrap
   clone
+  shallow-clone
 }
