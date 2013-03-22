@@ -78,7 +78,7 @@ module.exports = (engine) ->
 
   if engine     # A custom selector engine was provided
     query   : engine.query-selector-all or query
-    matches : engine.matches-selector or matches-p
+    matches : engine.matches-selector or matches
 
   else          # Otherwise uses the available DOM selection methods
     { query, matches }
