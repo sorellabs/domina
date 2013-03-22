@@ -45,15 +45,22 @@
     "slake-build-utils": ">=0.3.5 || <2.0.0",
     "noire": "<2.0.0",
     "sinon": "<2.0.0",
-    "buster-format": "<2.0.0"
+    "buster-format": "<2.0.0",
+    "LiveScript": "~0.9.12"
   },
   "optionalDependencies": {},
   "scripts": {
-    "prepublish": "slake build"
+    "prepublish": "./node_modules/.bin/slake build"
   },
   "calliope": {
     "output": "docs/api",
     "copyright": "© 2013 Quildreen \"Sorella\" Motta",
-    "packages": [{ "files": ["src/*.ls"] }]
+    "packages": [
+      {
+        "files": [
+          "src/*.ls"
+        ]
+      }
+    ]
   }
 }
