@@ -1,7 +1,7 @@
 {
   "name": "moros",
   "description": "Functional DOM processing abstractions through generic functions.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "keywords": [
     "DOM",
     "browser",
@@ -37,20 +37,9 @@
     "Slakefile"
   ],
   "main": "./lib/index.js",
-  "devDependencies": {
-    "prelude-ls": ">=0.5.0 || <2.0.0",
-    "node-watch": ">=0.2.0 || <2.0.0",
-    "http-get": ">=0.4.2 || <2.0.0",
-    "cassie": "~1",
-    "slake-build-utils": ">=0.3.5 || <2.0.0",
-    "noire": "<2.0.0",
-    "sinon": "<2.0.0",
-    "buster-format": "<2.0.0",
-    "LiveScript": "~0.9.12"
-  },
   "optionalDependencies": {},
   "scripts": {
-    "prepublish": "./node_modules/.bin/slake build"
+    "prepublish": "./node_modules/.bin/lsc -o lib -c src/*.ls"
   },
   "calliope": {
     "output": "docs/api",
@@ -62,5 +51,8 @@
         ]
       }
     ]
+  },
+  "devDependencies": {
+    "LiveScript": "~1.1.1"
   }
 }
