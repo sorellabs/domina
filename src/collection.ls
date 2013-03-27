@@ -43,7 +43,7 @@ to-array = (xs) -> [x for x in xs]
 #
 # :: a -> Bool
 collection-p = (a) ->
-  a && (not 'nodeType' of a) \
+  a && (not a.node-type) \
     && a.length >= 0
 
 
