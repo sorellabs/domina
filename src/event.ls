@@ -69,7 +69,7 @@ module.exports = (event, engine) ->
   # :: (Event -> Maybe Node) -> (Event -> Maybe Node)
   as-filter = (filter) ->
     | callable-p filter => filter
-    | otherwise         => (ev) -> find-target selector           \
+    | otherwise         => (ev) -> find-target filter             \
                                              , ev.current-target  \
                                              , ev.target
 
