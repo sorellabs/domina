@@ -29,7 +29,7 @@ module.exports = (event, engine) ->
   
   ### -- Dependencies --------------------------------------------------
   {each} = require './collection'
-  {matches} = require './query'
+  {matches} = (require './query') engine
 
 
   
