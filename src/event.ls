@@ -58,7 +58,7 @@ module.exports = (event, engine) ->
   # :: String -> Node -> Node -> Maybe Node
   find-target = (selector, parent, x) -->
     while x isnt parent
-      if matches x, selector => return x
+      if matches selector, x => return x
       x = x.parent-node
 
 
