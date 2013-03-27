@@ -2,9 +2,9 @@
 #
 # Manages events on DOOM nodes.
 #
-# 
+#
 # Copyright (c) 2013 Quildreen "Sorella" Motta <quildreen@gmail.com>
-# 
+#
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
 # (the "Software"), to deal in the Software without restriction,
@@ -12,10 +12,10 @@
 # publish, distribute, sublicense, and/or sell copies of the Software,
 # and to permit persons to whom the Software is furnished to do so,
 # subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -46,8 +46,8 @@ module.exports = (event, engine) ->
 
 
   #### λ callable-p
-  # Checks if something can be called.  
-  # 
+  # Checks if something can be called.
+  #
   # :: a -> Bool
   callable-p = (a) -> typeof a is 'function'
 
@@ -126,7 +126,7 @@ module.exports = (event, engine) ->
   # :: EventFilter -> EventType -> (Event, Node -> Bool) -> [Node] -> ()
   delegate = (filter, event, handler, xs) -->
     xs |> listen event, (ev) ->
-            element = filter ev
+            element = (as-filter filter) ev
             if element => handler.call this, ev, element
 
 
