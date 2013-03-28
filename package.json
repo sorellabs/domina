@@ -1,5 +1,5 @@
 {
-  "name": "moros",
+  "name": "doom",
   "description": "Functional DOM processing abstractions through generic functions.",
   "version": "0.4.2",
   "keywords": [
@@ -12,17 +12,17 @@
     "email": "quildreen@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com/killdream/moros/issues"
+    "url": "https://github.com/killdream/doom/issues"
   },
   "licences": [
     {
       "type": "MIT",
-      "url": "https://raw.github.com/killdream/moros/master/LICENCE.txt"
+      "url": "https://raw.github.com/killdream/doom/master/LICENCE.txt"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/killdream/moros.git"
+    "url": "git://github.com/killdream/doom.git"
   },
   "directories": {
     "lib": "./lib"
