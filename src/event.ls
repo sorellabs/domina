@@ -65,13 +65,13 @@ module.exports = (event, engine) ->
   #### λ as-filter
   # Constructs a `EventFilter` for delegating events.
   #
-  # :: String -> (Event -> Maybe Node)
-  # :: (Event -> Maybe Node) -> (Event -> Maybe Node)
-  as-filter = (filter) ->
-    | callable-p filter => filter
-    | otherwise         => (ev) -> find-target filter             \
-                                             , ev.current-target  \
-                                             , ev.target
+  # :: Node, String -> (Event -> Maybe Node)
+  # :: Node, (Node, Event -> Maybe Node) -> (Event -> Maybe Node)
+  as-filter = (current, filter) ->
+    source = ev.target or ev.src-element
+    switch
+    | callable-p filter => (ev) -> filter.call this, current, ev
+    | otherwise         => (ev) -> find-target filter, current, source
 
 
   
@@ -124,10 +124,11 @@ module.exports = (event, engine) ->
   # - `listen`.
   #
   # :: EventFilter -> EventType -> (Event, Node -> Bool) -> [Node] -> ()
-  delegate = (filter, event, handler, xs) -->
+  delegate = (filter, event, handler, xs) --> 
     xs |> listen event, (ev) ->
-            element = (as-filter filter) ev
-            if element => handler.call this, ev, element
+                             current = ev.current-target || this
+                             element = (as-filter current, filter) ev
+                             if element => handler.call this, ev, element
 
 
   #### λ deafen
