@@ -61,6 +61,12 @@ module.exports = (event, engine) ->
       if matches selector, x => return x
       x = x.parent-node
 
+  #### λ source
+  # Returns the element that originated the Event.
+  #
+  # :: Event -> HTMLElement
+  source = (ev) -> ev.target or ev.src-element
+
 
   #### λ as-filter
   # Constructs a `EventFilter` for delegating events.
@@ -68,10 +74,9 @@ module.exports = (event, engine) ->
   # :: Node, String -> (Event -> Maybe Node)
   # :: Node, (Node, Event -> Maybe Node) -> (Event -> Maybe Node)
   as-filter = (current, filter) ->
-    source = ev.target or ev.src-element
     switch
     | callable-p filter => (ev) -> filter.call this, current, ev
-    | otherwise         => (ev) -> find-target filter, current, source
+    | otherwise         => (ev) -> find-target filter, current, (source ev)
 
 
   
