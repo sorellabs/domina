@@ -35,9 +35,9 @@ merge = (xs) ->
 ### -- Exports ---------------------------------------------------------
 module.exports = (engine, events) -> merge [
   require './collection'
-  require './traversing' <| engine
-  require './query' <| engine
-  require './event' <| events
+  (require './traversing') engine
+  (require './query') engine
+  (require './event') events, engine
   require './manipulation'
   require './property'
   require './presentation'
