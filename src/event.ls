@@ -51,14 +51,20 @@ module.exports = (event, engine) ->
   # :: a -> Bool
   is-callable = (a) -> typeof a is 'function'
 
+  #### λ is-element
+  # Checks if something is an element node
+  #
+  # :: a -> Bool
+  is-element = (a) -> a?.node-type is 1
+
 
   #### λ find-target
   # Finds the actual target of an event, for delegation's sake.
   #
   # :: String -> Node -> Node -> Maybe Node
   find-target = (selector, parent, x) -->
-    while x isnt parent
-      if matches selector, x => return x
+    while x && x isnt parent
+      if (is-element x) and (matches selector, x) => return x
       x = x.parent-node
 
   #### λ source
