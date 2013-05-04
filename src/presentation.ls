@@ -177,10 +177,10 @@ has-class = (name, xs) -->
 #
 # :: String -> xs:[Node*] -> xs
 toggle-class = (name, xs) -->
-  has-p = has-class-p name
+  has = has-class name
   xs |> each ->
-         | has-p it .0  => remove-class name, it
-         | otherwise    => add-class name, it
+         | has it .0  => remove-class name, it
+         | otherwise  => add-class name, it
 
 #### λ specify-class-state
 # Adds or removes a bunch of classes on the given nodes.
