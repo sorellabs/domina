@@ -31,7 +31,7 @@
 
 
 ### -- Aliases ---------------------------------------------------------
-array-p = Array.is-array
+is-array = Array.is-array
 
 
 ### -- Helpers ---------------------------------------------------------
@@ -70,8 +70,8 @@ make-class-re = (name) ->
 #
 # :: Classes -> String
 normalise-classes = ->
-  | array-p it  => it.join ' '
-  | otherwise   => String it
+  | is-array it  => it.join ' '
+  | otherwise    => String it
 
 
 
@@ -186,9 +186,9 @@ toggle-class = (name, xs) -->
 # Adds or removes a bunch of classes on the given nodes.
 #
 # :: String -> Bool -> xs:[Node*] -> xs
-specify-class-state = (name, should-add-p, xs) --> xs |> each ->
-  | should-add-p  => add-class name, it
-  | otherwise     => remove-class name, it
+specify-class-state = (name, should-add, xs) --> xs |> each ->
+  | should-add  => add-class name, it
+  | otherwise   => remove-class name, it
 
 
 ### -- Exports ---------------------------------------------------------

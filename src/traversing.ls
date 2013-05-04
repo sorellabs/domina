@@ -27,7 +27,7 @@
 # :: SelectorEngine -> Module traversing
 module.exports = (engine) ->
 
-  {query, matches-p} = (require './query') engine
+  {query, matches} = (require './query') engine
   {map, concat, map-concat} = require './collection'
 
 
@@ -58,7 +58,7 @@ module.exports = (engine) ->
   first-stepping-with = (stepper, selector, x) -->
     do
       if x => x := stepper x
-    until x && (matches-p selector, x)
+    until x && (matches selector, x)
     x
 
   #### λ collect-stepping-with
@@ -69,7 +69,7 @@ module.exports = (engine) ->
   # :: (a -> a) -> Selector -> Element -> [Element]
   collect-stepping-with = (stepper, selector, x) -->
     while x
-      if x && (matches-p selector, x)
+      if x && (matches selector, x)
         y = x
         x := stepper x
         y

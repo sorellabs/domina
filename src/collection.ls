@@ -37,12 +37,12 @@
 to-array = (xs) -> [x for x in xs]
 
 
-#### λ collection-p
+#### λ is-collection
 #
 # Checks if something is a Collection.
 #
 # :: a -> Bool
-collection-p = (a) ->
+is-collection = (a) ->
   a && (not a.node-type) \
     && a.length >= 0
 
@@ -85,8 +85,8 @@ last = (xs) -> (as-collection xs)[*-1]
 # :: a -> Coll a
 # :: Coll a -> Coll a
 as-collection = (x) ->
-  | collection-p x => x
-  | otherwise      => [x]
+  | is-collection x => x
+  | otherwise       => [x]
 
 
 

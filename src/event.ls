@@ -37,19 +37,19 @@ module.exports = (event, engine) ->
   e = document.createElement \div
 
 
-  #### λ has-p
+  #### λ has
   # Checks if the DOOM implementation acknowledges the given message for
   # Nodes.
   #
   # :: String -> Bool
-  has-p = (key) -> key of e
+  has = (key) -> key of e
 
 
-  #### λ callable-p
+  #### λ is-callable
   # Checks if something can be called.
   #
   # :: a -> Bool
-  callable-p = (a) -> typeof a is 'function'
+  is-callable = (a) -> typeof a is 'function'
 
 
   #### λ find-target
@@ -75,8 +75,8 @@ module.exports = (event, engine) ->
   # :: Node, (Node, Event -> Maybe Node) -> (Event -> Maybe Node)
   as-filter = (current, filter) ->
     switch
-    | callable-p filter => (ev) -> filter.call this, current, ev
-    | otherwise         => (ev) -> find-target filter, current, (source ev)
+    | is-callable filter => (ev) -> filter.call this, current, ev
+    | otherwise          => (ev) -> find-target filter, current, (source ev)
 
 
   
@@ -112,8 +112,8 @@ module.exports = (event, engine) ->
   #
   # :: EventType -> (Event -> IO Bool) -> [Node] -> ()
   listen = switch
-  | has-p \addEventListener => w3c-listen
-  | otherwise               => ie-listen
+  | has \addEventListener => w3c-listen
+  | otherwise             => ie-listen
 
 
   #### λ delegate
@@ -146,8 +146,8 @@ module.exports = (event, engine) ->
   #
   # :: EventType -> (Event -> IO Bool) -> [Node] -> ()
   deafen = switch
-  | has-p \removeEventListener => w3c-remove
-  | otherwise                  => ie-remove
+  | has \removeEventListener => w3c-remove
+  | otherwise                => ie-remove
 
 
   

@@ -33,19 +33,19 @@ module.exports = (engine) ->
 
   ### -- Helpers -------------------------------------------------------
 
-  #### λ internal-matches-p
+  #### λ internal-matches
   # :internal:
   # Test which implementation of ``matchesSelector`` is available, so we
   # can just keep using it everytime without paying for the additional
   # checks :3
   #
   # :: @Element => Selector -> Coll Element
-  internal-matches-p = let el = document.create-element 'div'
-                       return el.matches-selector        \
-                           || el.o-matches-selector      \
-                           || el.ms-matches-selector     \
-                           || el.moz-matches-selector    \
-                           || el.webkit-matches-selector \
+  internal-matches = let el = document.create-element 'div'
+                     return el.matches-selector        \
+                         || el.o-matches-selector      \
+                         || el.ms-matches-selector     \
+                         || el.moz-matches-selector    \
+                         || el.webkit-matches-selector \
 
 
   
@@ -70,7 +70,7 @@ module.exports = (engine) ->
   #
   # :: Selector -> Element -> Bool
   matches = (selector, node) -->
-    internal-matches-p.call node, selector
+    internal-matches.call node, selector
 
 
   
