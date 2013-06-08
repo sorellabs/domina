@@ -1,5 +1,5 @@
 {
-  "name": "doom",
+  "name": "domina",
   "description": "Functional DOM processing abstractions through generic functions.",
   "version": "0.4.6",
   "keywords": [
@@ -12,17 +12,17 @@
     "email": "quildreen@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com/killdream/doom/issues"
+    "url": "https://github.com/killdream/domina/issues"
   },
   "licences": [
     {
       "type": "MIT",
-      "url": "https://raw.github.com/killdream/doom/master/LICENCE.txt"
+      "url": "https://raw.github.com/killdream/domina/master/LICENCE.txt"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/killdream/doom.git"
+    "url": "git://github.com/killdream/domina.git"
   },
   "directories": {
     "lib": "./lib"
