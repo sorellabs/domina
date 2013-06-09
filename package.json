@@ -53,6 +53,8 @@
     ]
   },
   "devDependencies": {
-    "LiveScript": "~1.1.1"
+    "LiveScript": "~1.1.1",
+    "brofist": "~0.2.3",
+    "claire": "~0.4.1"
   }
 }
