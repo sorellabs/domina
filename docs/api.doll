@@ -1,206 +1,107 @@
-== Interfaces ==========================================================
 
-
-Interface Sequence
-  length :: UInt32
-
-
-Interface EventManager
-  listen! :: EventType -> (Event -> IO Bool) -> Coll a* -> ()
-  remove! :: EventType -> (Event -> IO Bool) -> Coll a* -> ()
-
-
-Interface SelectorEngine
-  query-selector-all :: Selector, Element? -> Coll Element
-  matches-selector   :: Selector -> Element -> Bool
-
-
-type Selector  = String
-
-type EventType = String
-
-type Classes   = [String] | String
-
-type NodeValue = [String] | String
-
-type Coll a    = NodeList a
-               | [a]
-               | Just a
-
-
-== Modules =============================================================
-
-
--- | Manipulates and queries any Collection
-Module collection
-  -- | Retrieves the first item of a collection
-  head :: Coll a -> Maybe a
-
-  -- | Retrieves the tail of a collection
-  tail :: Coll a -> Coll a
-
-  -- | Retrieves the last item of a collection
-  last :: Coll a -> Maybe a
-
-  -- | Checks if a collection is empty
-  empty-p :: Coll a -> Bool
-
-  -- | Turns something into a collection
-  as-collection :: a -> Coll a
-
-  -- | Maps a collection using a transform function
-  map :: (a -> b) -> Coll a -> [b]
-
-  -- | Applies a function to every item of the collection
-  each :: (a -> IO ()) -> Coll a -> Coll a
-
-  -- | Reduces the collection through a binary function
-  reduce :: (b, a -> b) -> b -> Coll a -> b
-
-  -- | Concatenates several collections together
-  concat :: Coll a... -> Coll a
-
-
--- | Walks through the DOM tree
-Module traversing
-  -- | Retrieves the next sibling matching the selector for each node
-  next :: Selector -> Coll a -> Coll a
-
-  -- | Retrieves the previous sibling matching the selector for each node
-  previous :: Selector -> Coll a -> Coll a
-
-  -- | Retrieves all the siblings matching the selector for each node
-  siblings :: Selector -> Coll a -> Coll a
-
-  -- | Retrieves the first parent matching the selector for each node
-  parent :: Selector -> Coll a -> Coll a
-
-  -- | Retrieves all the parents matching the selector for each node
-  parents :: Selector -> Coll a -> Coll a
-
-  -- | Retrieves all the children matching the selector for each node
-  children :: Selector -> Coll a -> Coll a
-
-
--- | Selects part of a DOM tree through CSS selectors
-Module query (SelectorEngine)
-  -- | Checks if an element matches a selector  
-  matches :: Selector -> Element -> Bool
-
-  -- | Retrieves all elements matching the selector, under the context
-  query :: Selector, Element? -> Coll Element
-
-
--- | Listens to events on the DOM tree
-Module event (EventManager)
-  -- | Listen to all events of the given type on the nodes
-  listen! :: EventType -> (Event -> IO Bool) -> Coll a* -> ()
-
-  -- | Listen to all events that pass the filter, uses nodes as roots.
-  delegate! :: EventType -> EventFilter -> (Event -> IO Bool) -> Cool a* -> ()
-
-  -- | Removes the given listeners for every node
-  deafen! :: EventType -> (Event -> IO Bool) -> Coll a* -> ()
-
-
--- | Manipulates a collection of Nodes
-Module manipulation
-  -- | Appends a collection of nodes to a parent
-  append! :: Node* -> xs:Coll Node* -> xs
-
-  -- | Prepends a collection of nodes to a parent
-  prepend! :: Node* -> xs:Coll Node* -> xs
-
-  -- | Inserts a collection of nodes before a node
-  insert-before! :: Node* -> xs:Coll Node* -> xs
-
-  -- | Inserts a collection of nodes after a node
-  insert-after! :: Node* -> xs:Coll Node* -> xs
-
-  -- | Detaches a collection of nodes from the DOM
-  detach! :: xs:Node* -> xs
-
-  -- | Replaces a node by a collection of nodes
-  replace! :: Node* -> xs:Coll Node* -> xs
-
-  -- | Wraps a node into another
-  wrap! :: Node* -> x:Node* -> x
-
-  -- | Removes all children of every node in the collection
-  clear! :: xs:Node* -> xs
-
-  -- | Returns a clone of all nodes in the collection, optionally deep
-  clone :: Bool -> Coll Node -> Coll Node
-
-
--- | Manipulates the properties of Nodes
-Module property
-  -- | Retrieves all attributes for all nodes
-  attributes :: Coll Element -> [[Attribute]]
-
-  -- | Retrieves a named attribute for every node
-  attribute :: String -> Coll Element -> [Maybe String]
-
-  -- | Sets the value of an attribute in every node
-  set-attribute! :: String -> Maybe String -> xs:Coll Element* -> xs
-
-  -- | Retrieves the textual content of every node
-  text :: Coll Element -> [String]
-
-  -- | Sets the textual content of every node
-  set-text! :: String -> xs:Coll Element* -> xs
-
-  -- | Retrieves the HTML content of every node
-  html :: Coll Element -> [String]
-
-  -- | Sets the HTML content of every node
-  set-html! :: String -> xs:Coll Element* -> xs
-
-  -- | Retrieves the value of every form input
-  value :: Coll Input -> [NodeValue]
-
-  -- | Sets the value of every form input
-  set-value :: String -> xs:Coll Input* -> xs
-
-  -- | Sets the value of every multi-selection combo-box
-  set-value :: [String] -> xs:Coll MultiSelect* -> xs
-  
-
--- | Manipulates the presentation of Nodes
-Module presentation
-  -- | Retrieves a inline style property for every node
-  style :: String -> Coll Element -> [String]
-  -- | Retrieves the computed value of a style for every node
-  computed-style :: String -> Coll Element -> [Maybe String]
-
-  -- | Sets the inline style property of every node
-  set-style :: String -> String -> cs:Coll Element* -> xs
-
-  -- | Retrieves the list of classes for every node
-  classes :: Coll Element -> [[String]]
-
-  -- | Adds classes to every node
-  add-class :: Classes -> xs:Coll Element* -> xs
-
-  -- | Remove classes from every node
-  remove-class :: Classes -> xs:Coll Element* -> xs
-
-  -- | Checks if every node has any of the classes given
-  has-class-p :: Classes -> xs:Coll Element* -> [Bool]
-
-  -- | Toggles particular classes in every node
-  toggle-class :: Classes -> xs:Coll Element* -> xs
-
-  -- | Specify the state of particular classes in every node
-  specify-class-state :: Classes -> Bool -> xs:Coll Element* -> xs
-
-
--- | Package entrypoint
-Package moros (a:SelectorEngine, b:EventManager)
-  {} & collection
-     & traversing a
-     & query a
-     & event b
-     & manipulation
-     & property
-     & presentation
+-- Type aliases --------------------------------------------------------
+type Selector: String
+
+type EventType: String
+
+type Classes: [String] | String
+
+type NodeValue: [String] | String
+
+type Coll a: [a]
+
+
+-- Module interfaces ---------------------------------------------------
+type EventShim
+  *listen: EventType -> (Event -> Bool) -> Coll a -> ()
+  *remove: EventType -> (Event -> Bool) -> Coll a -> ()
+
+type SelectorEngine
+  querySelectorAll: Selector, Element? -> Coll Element
+  matchesSelector: Selector -> Element -> Bool
+
+
+-- Domina modules ------------------------------------------------------
+
+module Collection
+  head: Coll a -> Maybe a
+  tail: Coll a -> Coll a
+  last: Coll a -> Maybe a
+  isEmpty: Coll a -> Bool
+
+  asCollection: a -> Coll a
+  asCollection: NodeList a -> Coll a
+  asCollection: [a] -> Coll a
+
+module Folding
+  map: (a -> b) -> Coll a -> Coll b
+  each: (a -> ()) -> Coll a -> Coll a
+  reduce: (b, a -> b) -> b -> Coll a -> b
+  filter: (a -> Bool) -> Coll a -> Coll a
+  flatten: Coll (Coll a) -> Coll a
+  concat: Coll a... -> Coll a
+
+module Traversing
+  next: (a -> Bool) -> Coll a -> Coll a
+  previous: (a -> Bool) -> Coll a -> Coll a
+  siblings: (a -> Bool) -> Coll a -> Coll a
+  parent: (a -> Bool) -> Coll a -> Coll a
+  parents: (a -> Bool) -> Coll a -> Coll a
+  children: (a -> Bool) -> Coll a -> Coll a
+
+module Query (SelectorEngine)
+  matches: Selector -> Element -> Bool
+  query: Selector, Element? -> Coll Element
+
+module Event (EventShim)
+  *listen: EventType -> (Event -> Bool) -> Coll a -> ()
+  *delegate: EventType -> (a -> Bool) -> (Event -> Bool) -> Coll a -> ()
+  *deafen: EventType -> (Event -> Bool) -> Coll a -> ()
+
+module Manipulation
+  *append: Node -> Coll Node -> Coll Node
+  *prepend: Node -> Coll Node -> Coll Node
+  *insertBefore: Node -> Coll Node -> Coll Node
+  *insertAfter: Node -> Coll Node -> Coll Node
+  *detach: Coll Node -> Coll Node
+  *replace: Node -> Coll Node -> Coll Node
+  *wrap: Node -> Coll Node -> Coll Node
+  *clear: Coll Node -> Coll Node
+  clone: Coll Node -> Coll Node
+  shallowClone: Coll Node -> Coll Node
+
+module Property
+  attributes: Coll Element -> [[Attribute]]
+  attribute: String -> Coll Element -> [Maybe String]
+  *setAttribute: String -> String -> Coll Element -> Coll Element
+  *removeAttribute: String -> Coll Element -> Coll Element
+  property: String -> Coll Element -> [Maybe a]
+  *setProperty: String -> a -> Coll Element -> Coll Element
+  *removeProperty: String -> Coll Element -> Coll Element
+  text: Coll Element -> [String]
+  *setText: String -> Coll Element -> Coll Element
+  html: Coll Element -> [String]
+  *setHtml: String -> Coll Element -> Coll Element
+  value: Coll Input -> [NodeValue]
+  *setValue: String -> Coll Input -> Coll Input
+  *setValue: String -> Coll MultiSelect -> Coll MultiSelect
+
+module Presentation
+  style: String -> Coll Element -> [String]
+  computedStyle: String -> Coll Element -> [Maybe String]
+  *setStyle: String -> String -> Coll Element -> Coll Element
+  classes: Coll Element -> [[String]]
+  *addClass: Classes -> Coll Element -> String
+  *removeClass: Classes -> Coll Element -> Coll Element
+  hasClass: Classes -> Coll Element -> [Bool]
+  *toggleClass: Classes -> Coll Element -> Coll Element
+  *specifyClassState: Bool -> Classes -> Coll Element -> Coll Element
+
+module Domina (css:SelectorEngine, evt:EventShim)
+  {} + collection
+     + traversing
+     + query (css)
+     + event (evt)
+     + manipulation
+     + property
+     + presentation
