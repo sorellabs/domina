@@ -38,8 +38,8 @@ module Folding
   each: (a -> ()) -> Coll a -> Coll a
   reduce: (b, a -> b) -> b -> Coll a -> b
   filter: (a -> Bool) -> Coll a -> Coll a
-  flatten: Coll (Coll a) -> Coll a
   concat: Coll a... -> Coll a
+  map-concat: (a -> [b]) -> Coll a -> Coll b
 
 module Traversing
   next: (a -> Bool) -> Coll a -> Coll a
