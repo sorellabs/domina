@@ -26,7 +26,7 @@
 
 # -- Helpers -----------------------------------------------------------
 
-# ### Function is-collection
+# ### is-collection()
 #
 # Checks if something can be treated as a collection.
 #
@@ -38,7 +38,7 @@ is-collection = (a) ->
 
 # -- Core implementation -----------------------------------------------
 
-# ### Function head
+# ### head()
 #
 # Returns the first item of a collection.
 #
@@ -46,7 +46,7 @@ is-collection = (a) ->
 head = (xs) -> xs.0
 
 
-# ### Function tail
+# ### tail()
 # 
 # Returns the rest of the items in a collection.
 #
@@ -54,7 +54,7 @@ head = (xs) -> xs.0
 tail = (xs) -> [x for x, i in xs | i > 0]
 
 
-# ### Function last
+# ### last()
 #
 # Returns the last item in a collection.
 #
@@ -62,7 +62,7 @@ tail = (xs) -> [x for x, i in xs | i > 0]
 last = (xs) -> (as-collection xs)[*-1]
 
 
-# ### Function as-collection
+# ### as-collection()
 #
 # Turns anything into a collection.
 #
