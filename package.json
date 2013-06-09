@@ -39,7 +39,7 @@
   "main": "./lib/index.js",
   "optionalDependencies": {},
   "scripts": {
-    "prepublish": "./node_modules/.bin/lsc -o lib -c src/*.ls"
+    "prepublish": "make prepublish"
   },
   "calliope": {
     "output": "docs/api",

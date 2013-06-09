@@ -32,7 +32,7 @@
 #
 # :: a -> Bool
 is-collection = (a) ->
-  a && (not ('nodeType' in a)) \
+  a && (not ('nodeType' of a)) \
     && a.length >= 0
 
 
@@ -43,7 +43,7 @@ is-collection = (a) ->
 # Returns the first item of a collection.
 #
 # :: Coll a -> Maybe a
-head = (xs) -> (as-collection xs).0
+head = (xs) -> xs.0
 
 
 # ### Function tail
@@ -51,11 +51,7 @@ head = (xs) -> (as-collection xs).0
 # Returns the rest of the items in a collection.
 #
 # :: Coll a -> Coll a
-tail = (xs) -> 
-  result = new Array (xs.length - 1)
-  for x, i in (as-collection xs) when i > 0
-    result[i-1] = xs[i]
-  result
+tail = (xs) -> [x for x, i in xs | i > 0]
 
 
 # ### Function last

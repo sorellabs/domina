@@ -24,13 +24,14 @@ to-node-list = (xs) ->
   fragment.child-nodes
           
 # Picks an array item at random
-choose-int = (a, b) -> floor ((Math.random * (b - a)) + a)
+choose-int = (a, b) -> Math.floor ((Math.random! * (b - a)) + a)
 pick-one   = (xs) -> xs[choose-int 0, xs.length]
           
 # Generates DOM elements
-Text      = claire.transform (-> document.create-text-node it), String
+SmallStr  = claire.sized (-> 10), claire.data.Str
+Text      = claire.transform (-> document.create-text-node it), SmallStr
 Element   = claire.as-generator -> document.create-element (pick-one tags)
-Node      = claire.choose Text, Element
+Node      = claire.choice Text, Element
 NodeArray = claire.data.Array Node
 NodeList  = claire.transform to-node-list, NodeArray
 

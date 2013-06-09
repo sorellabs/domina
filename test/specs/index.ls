@@ -1,2 +1,4 @@
-module.exports = [ require './collection'
+module.exports = [
+                 * require './collection'
                  ]
+
