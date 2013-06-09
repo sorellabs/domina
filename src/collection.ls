@@ -1,4 +1,4 @@
-## Module collection
+# # Module collection
 #
 # Generic collection handling for DOM.
 #
@@ -24,34 +24,21 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+# -- Helpers -----------------------------------------------------------
 
-
-### -- Helpers ---------------------------------------------------------
-
-#### λ to-array
+# ### Function is-collection
 #
-# Converts a Collection to an Array. Only exists to guard on
-# sequence-like host objects in engines like JScript.
-#
-# :: Coll a -> Array a
-to-array = (xs) -> [x for x in xs]
-
-
-#### λ is-collection
-#
-# Checks if something is a Collection.
+# Checks if something can be treated as a collection.
 #
 # :: a -> Bool
 is-collection = (a) ->
-  a && (not a.node-type) \
+  a && (not ('nodeType' in a)) \
     && a.length >= 0
 
 
+# -- Core implementation -----------------------------------------------
 
-
-### -- Accessing elements ----------------------------------------------
-
-#### λ head
+# ### Function head
 #
 # Returns the first item of a collection.
 #
@@ -59,108 +46,43 @@ is-collection = (a) ->
 head = (xs) -> (as-collection xs).0
 
 
-#### λ tail
-#
-# Returns a new collection without the first item.
+# ### Function tail
+# 
+# Returns the rest of the items in a collection.
 #
 # :: Coll a -> Coll a
-tail = (xs) -> [x for x, i in (as-collection xs) when i > 0]
+tail = (xs) -> 
+  result = new Array (xs.length - 1)
+  for x, i in (as-collection xs) when i > 0
+    result[i-1] = xs[i]
+  result
 
 
-#### λ last
+# ### Function last
 #
-# Returns the last item of a collection.
+# Returns the last item in a collection.
 #
 # :: Coll a -> Maybe a
 last = (xs) -> (as-collection xs)[*-1]
 
 
-
-### -- Conversions -----------------------------------------------------
-
-#### λ as-collection
+# ### Function as-collection
 #
 # Turns anything into a collection.
 #
 # :: a -> Coll a
-# :: Coll a -> Coll a
-as-collection = (x) ->
-  | is-collection x => x
-  | otherwise       => [x]
+# :: NodeList a -> Coll a
+# :: [a] -> Coll a
+as-collection = (xs) ->
+  | is-collection xs => xs
+  | otherwise        => [xs]
 
 
 
-### -- Iterators and folds ---------------------------------------------
-
-#### λ each
-#
-# Applies a function to each item in the Collection.
-#
-# :: (a -> IO ()) -> xs:Coll a* -> xs
-each = (f, xs) -->
-  ys = as-collection xs
-  for x, i in ys => f x
-  ys
-
-
-#### λ map
-#
-# Transforms a Collection by applying the given function to each item.
-#
-# :: (a -> b) -> Coll a -> Coll b
-map = (f, xs) --> [(f x) for x in (as-collection xs)]
-
-
-#### λ reduce
-#
-# Computes a value by incrementally reducing a collection with a binary
-# function.
-#
-# :: (b, a -> b) -> b -> Coll a -> b
-reduce = (f, initial, xs) -->
-  result = initial
-  for x in (as-collection xs) => result = (f result, x)
-  result
-
-
-#### λ concat
-#
-# Concatenates several collections together.
-#
-# :: Coll a... -> Coll a
-concat = (...xs) ->
-  append = (ys, a) ->
-    ys.push.apply ys, a
-    ys
-
-  reduce append, [], (as-collection xs)
-
-
-#### λ map-concat
-#
-# Maps over a collection concatenating the resulting collections.
-#
-# :: (a -> [b]) -> Coll a -> [b]
-map-concat = (f, xs) -->
-  flat-transform = (ys, a) ->
-    ys.push.apply ys, (f a)
-    ys
-
-  reduce flat-transform, [], (as-collection xs)
-
-
-
-
-### -- Exports ---------------------------------------------------------
+# -- Exports -----------------------------------------------------------
 module.exports = {
-  to-array
   head
   tail
   last
   as-collection
-  map
-  each
-  reduce
-  concat
-  map-concat
 }
