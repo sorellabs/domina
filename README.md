@@ -1,8 +1,11 @@
 Domina
 ======
 
-[![Build Status](https://travis-ci.org/killdream/memento.png)](https://travis-ci.org/killdream/memento)
-[![Dependencies Status](https://david-dm.org/killdream/memento.png)](https://david-dm.org/killdream/memento)
+[![Build Status](https://secure.travis-ci.org/robotlolita/domina.png?branch=master)](https://travis-ci.org/robotlolita/domina)
+[![NPM version](https://badge.fury.io/js/domina.png)](http://badge.fury.io/js/domina)
+[![Dependencies Status](https://david-dm.org/robotlolita/domina.png)](https://david-dm.org/robotlolita/domina)
+[![experimental](http://hughsk.github.io/stability-badges/dist/experimental.svg)](http://github.com/hughsk/stability-badges)
+
 
 A functional and modular DOM processing library with three major design goals:
 
@@ -10,7 +13,7 @@ A functional and modular DOM processing library with three major design goals:
  -  To be *overtly composable*.
  -  To be *a joy to use*.
 
-[![browser support](http://ci.testling.com/killdream/memento.png)](http://ci.testling.com/killdream/memento)
+[![browser support](http://ci.testling.com/robotlolita/domina.png)](http://ci.testling.com/robotlolita/domina)
 
 
 ## Example
